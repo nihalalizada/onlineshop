@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/catalogs")
 public class CatalogController {
 
     @Autowired
@@ -43,24 +43,24 @@ public class CatalogController {
         return new ResponseEntity<>(catalogService.updateCatalog(catalog), HttpStatus.OK);
     }
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Catalog> getCatalog(@PathVariable("id") Long id){
         return new ResponseEntity<>(catalogService.getCatalogById(id), HttpStatus.FOUND);
     }
 
-    @PutMapping("/update/{id}/name")
+    @PutMapping("/{id}/update.name")
     public ResponseEntity<String> updateCatalogName(@PathVariable("id") Long id, @RequestBody String name){
         catalogService.updateCatalogName(id, name);
         return new ResponseEntity<>("Name was successfully updated!", HttpStatus.OK);
     }
 
-    @PutMapping("/update/{id}/quantity")
+    @PutMapping("/{id}/update.quantity")
     public ResponseEntity<String> updateCatalogQuantity(@PathVariable("id") Long id, @RequestBody String quantity){
         catalogService.updateCatalogQuantity(id, Long.parseLong(quantity));
         return new ResponseEntity<>("Quantity was successfully updated!", HttpStatus.OK);
     }
 
-    @PutMapping ("/update/{id}/desc")
+    @PutMapping ("/{id}/update.desc")
     public ResponseEntity<String> updateCatalogDesc(@PathVariable("id") Long id, @RequestBody String description){
         catalogService.updateCatalogDescription(id, description);
         return new ResponseEntity<>("Description was successfully updated!", HttpStatus.OK);

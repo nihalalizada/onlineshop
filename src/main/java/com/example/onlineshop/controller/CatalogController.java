@@ -35,7 +35,7 @@ public class CatalogController {
     @DeleteMapping("/delete")
     public  ResponseEntity<String> delete(@RequestBody Catalog catalog){
         catalogService.delete(catalog);
-        return new ResponseEntity<>("Catalog with id " + catalog.getId()+ " was deleted!", HttpStatus.OK);
+        return new ResponseEntity<>("Catalog with id " + catalog.getCatalogId()+ " was deleted!", HttpStatus.OK);
     }
 
     @PutMapping("/update")
@@ -52,12 +52,6 @@ public class CatalogController {
     public ResponseEntity<String> updateCatalogName(@PathVariable("id") Long id, @RequestBody String name){
         catalogService.updateCatalogName(id, name);
         return new ResponseEntity<>("Name was successfully updated!", HttpStatus.OK);
-    }
-
-    @PutMapping("/{id}/update.quantity")
-    public ResponseEntity<String> updateCatalogQuantity(@PathVariable("id") Long id, @RequestBody String quantity){
-        catalogService.updateCatalogQuantity(id, Long.parseLong(quantity));
-        return new ResponseEntity<>("Quantity was successfully updated!", HttpStatus.OK);
     }
 
     @PutMapping ("/{id}/update.desc")

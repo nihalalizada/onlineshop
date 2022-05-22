@@ -14,10 +14,14 @@ public class Catalog {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long catalogId;
     @Column(nullable = false, unique = true)
     private String name;
     @Column(nullable = false)
-    private long quantity;
     private String description;
+
+    public Catalog(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

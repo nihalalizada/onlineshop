@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 public class CatalogServiceImpl implements CatalogService {
 
-    private CatalogRepository catalogRepository;
+    private final CatalogRepository catalogRepository;
 
     @Autowired
     public CatalogServiceImpl(CatalogRepository catalogRepository){
@@ -40,7 +40,7 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public void delete(Catalog catalog){
-        catalogRepository.findById(catalog.getId()).orElseThrow(
+        catalogRepository.findById(catalog.getCatalogId()).orElseThrow(
                 () -> new CatalogNotFoundException("Catalog was not found")
         );
         catalogRepository.delete(catalog);
@@ -48,10 +48,10 @@ public class CatalogServiceImpl implements CatalogService {
 
     @Override
     public Catalog updateCatalog(Catalog catalog){
-        Catalog updateCatalog = catalogRepository.getById(catalog.getId());
-        updateCatalog.setId(catalog.getId());
+        Catalog updateCatalog = catalogRepository.getById(catalog.getCatalogId());
+        updateCatalog.setCatalogId(catalog.getCatalogId());
         updateCatalog.setName(catalog.getName());
-        updateCatalog.setQuantity(catalog.getQuantity());
+        //updateCatalog.setProducts();
         updateCatalog.setDescription(catalog.getDescription());
         return catalogRepository.save(updateCatalog);
     }
@@ -63,29 +63,5 @@ public class CatalogServiceImpl implements CatalogService {
             return catalog.get();
         else
             throw new CatalogNotFoundException("Catalog with id " + id + " was not found!");
-    }
-
-    @Override
-    public void updateCatalogName(Long id, String name) {
-        catalogRepository.findById(id).orElseThrow(
-                () -> new CatalogNotFoundException("Catalog with id " + id + " was not found!")
-        );
-        catalogRepository.updateCatalogName(id, name);
-    }
-
-    @Override
-    public void updateCatalogQuantity(Long id, long quantity) {
-        catalogRepository.findById(id).orElseThrow(
-                () -> new CatalogNotFoundException("Catalog with id " + id + " was not found!")
-        );
-        catalogRepository.updateCatalogQuantity(id, quantity);
-    }
-
-    @Override
-    public void updateCatalogDescription(Long id, String description) {
-        catalogRepository.findById(id).orElseThrow(
-                () -> new CatalogNotFoundException("Catalog with id " + id + " was not found!")
-        );
-        catalogRepository.updateCatalogDescription(id, description);
     }
 }

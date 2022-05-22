@@ -18,10 +18,4 @@ public interface CatalogService {
 
     Catalog getCatalogById(Long id);
 
-    void updateCatalogName(Long id, String name);
-
-    void updateCatalogQuantity(Long id, long quantity);
-
-    void updateCatalogDescription(Long id, String description);
-
 }

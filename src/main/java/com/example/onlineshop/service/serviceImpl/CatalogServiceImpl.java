@@ -39,14 +39,6 @@ public class CatalogServiceImpl implements CatalogService {
     }
 
     @Override
-    public void delete(Catalog catalog){
-        catalogRepository.findById(catalog.getCatalogId()).orElseThrow(
-                () -> new CatalogNotFoundException("Catalog was not found")
-        );
-        catalogRepository.delete(catalog);
-    }
-
-    @Override
     public Catalog updateCatalog(Catalog catalog){
         Catalog updateCatalog = catalogRepository.getById(catalog.getCatalogId());
         updateCatalog.setCatalogId(catalog.getCatalogId());

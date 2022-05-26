@@ -13,7 +13,7 @@ public interface ProductService {
 
     /**  Updating product  */
 
-    void updateProduct(Product product);
+    Product updateProduct(Product product);
 
 
     /**  Getting product  */

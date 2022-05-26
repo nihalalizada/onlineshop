@@ -27,11 +27,21 @@ public class ProductServiceImpl implements ProductService {
     public Product addProduct(Product product) {
         if(productRepository.exists())
         if (!product.isAvailable()) {
-            productRepository.setAvailability(product.getProductId(), true);
+            productRepository.setAvailability(product.getProductId(), false);
         }
         productRepository.incrementQuantity(product.getProductId());
 
         return productRepository.save(product);
+    }
+
+    @Override
+    public Product updateProduct(Product product) {
+        Product updateProduct = productRepository.getById(product.getProductId());
+        //updateProduct.setProductId(product.getProductId());
+        updateProduct.setDescription(product.getDescription());
+        updateProduct.setName(product.getName());
+        updateProduct.setCatalog(product.getCatalog());
+        return productRepository.save(updateProduct);
     }
 
 
@@ -54,14 +64,13 @@ public class ProductServiceImpl implements ProductService {
         Optional<Product> product = productRepository.findById(productId);
         if (product.isPresent()) {
             if (product.get().getQuantity() == 1) {
-                productRepository.setAvailability(productId, true);
+                productRepository.setAvailability(productId, false);
             }
             productRepository.decrementQuantity(productId);
             productRepository.deleteById(productId);
         }
         else
             throw new ProductNotFoundException("Product with ID:" +productId+ "does not exist");
-
 
     }
 
@@ -74,8 +83,6 @@ public class ProductServiceImpl implements ProductService {
             }
         }
         return null;
-
     }
-
 }
 

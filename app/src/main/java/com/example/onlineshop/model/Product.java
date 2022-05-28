@@ -10,19 +10,22 @@ import javax.persistence.*;
 public class Product {
 
 
-    private @Id @GeneratedValue(strategy = GenerationType.IDENTITY) long productId;
-    private @Column (nullable = false, unique = true) String name;
-
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long productId;
+    @Column (nullable = false, unique = true)
+    private String name;
+    private double price;
     private long quantity = 0;
     private String description;
 
 
-    private @Column(nullable = false) boolean isAvailable = false;
+    @Column(nullable = false)
+    private boolean isAvailable = false;
 
-    private @ManyToOne Catalog catalog;
+    @ManyToOne
+    private Catalog catalog;
 
-    @Column(name = "image", nullable = true)
-    private String image;
+    private String imageURL;
 
 
 

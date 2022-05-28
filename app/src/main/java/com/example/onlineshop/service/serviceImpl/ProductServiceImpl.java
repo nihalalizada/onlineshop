@@ -25,7 +25,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override   /** Overiding the main save() method in JPA Repository */
     public Product addProduct(Product product) {
-        if(productRepository.exists())
         if (!product.isAvailable()) {
             productRepository.setAvailability(product.getProductId(), false);
         }

@@ -18,7 +18,7 @@ function CatalogsPage(){
         ["Description", "description"]
     ]
     return(
-        <Catalogs contracts={contracts} columns={columns}></Catalogs>
+        <><Catalogs contracts={contracts} columns={columns}></Catalogs></>
     )
 }
 

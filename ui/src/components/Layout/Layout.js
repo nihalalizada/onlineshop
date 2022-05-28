@@ -1,10 +1,19 @@
 import React from "react";
-import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
+import { withRouter, Switch, Route } from "react-router-dom";
 import Catalog from "../../pages/Catalog"
+import Header from "../Header/Header"
 
 
 function Layout(){
-    <Catalog/>
+    
+    return(
+    <>
+        <Header/>
+        <Switch>
+            <Route path="/app/catalog" component={Catalog}/>
+        </Switch>
+       
+    </>);
 }
 
 export default withRouter(Layout);

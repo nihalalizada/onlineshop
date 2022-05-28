@@ -1,5 +1,7 @@
 import React from 'react';
-import Catalogs from "../components/Catalogs/Catalogs";
+import { withRouter, Switch, Route } from "react-router-dom";
+
+import Catalogs from "../../components/Catalogs/Catalogs";
 
 function CatalogsPage(){
     const contracts = [

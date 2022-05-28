@@ -1,9 +1,8 @@
 import React from "react";
 import { withRouter, Switch, Route } from "react-router-dom";
-
 import { Table, TableContainer, TableHead, TableBody, TableRow, TableCell, Paper} from "@material-ui/core"
 
-function Catalogs({columns, contracts}){
+function Products({columns, contracts}){
     return(<TableContainer component={Paper} style={{width:"96%", margin: "2%"}}>
         <Table>
             <TableHead>
@@ -22,4 +21,4 @@ function Catalogs({columns, contracts}){
     </TableContainer>)
 }
 
-export default Catalogs
+export default Products

@@ -1,6 +1,8 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import { withRouter, Switch, Route } from "react-router-dom";
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
@@ -11,12 +13,12 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = ['Products', 'Catalogs', 'Contact'];
+const pages = [['Products', '/app/products'], ['Catalogs', '/app/catalogs'], ['Contact', 'app/contact']];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const Header = () => {
     function myfucn(){
-        console.log("something happened");
+       console.log("pressed")
     }
 
   return (
@@ -45,11 +47,13 @@ const Header = () => {
             <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
                 {pages.map((page) => (
                 <Button
-                    key={page}
-                    onClick={myfucn}
+                    component={Link}
+
+                    key={page[0]}
+                    to={page[1]}
                     sx={{ my: 2, color: 'white', display: 'block' }}
                 >
-                    {page}
+                    {page[0]}
                 </Button>
                 ))}
             </Box>

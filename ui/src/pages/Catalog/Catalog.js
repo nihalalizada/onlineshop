@@ -1,6 +1,4 @@
 import React from 'react';
-import { withRouter, Switch, Route } from "react-router-dom";
-
 import Catalogs from "../../components/Catalogs/Catalogs";
 
 function CatalogsPage(){
@@ -12,13 +10,12 @@ function CatalogsPage(){
         }
     ]
     
-    
-    
     const columns = [
-        ["Catalog ID", "catalogId"],
         ["Name", "name"],
-        ["Description", "description"]
+        ["Description", "description"],
+        ["Catalog ID", "catalogId"]
     ]
+   
     return(
         <><Catalogs contracts={contracts} columns={columns}></Catalogs></>
     )

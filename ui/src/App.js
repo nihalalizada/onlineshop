@@ -1,5 +1,4 @@
-import { Router, Route, Switch, withRouter } from "react-router-dom";
-import Layout from "./components/Layout/Layout"
+import { Router, Route, Redirect, Switch, withRouter } from "react-router-dom";
 import './App.css';
 import React from "react";
 import CatalogsPage from "./pages/Catalog/Catalog"
@@ -14,6 +13,7 @@ function App(){
     <Router history={customHistory}>
        <Header/>
         <Switch>
+          <Route exact path="/" render={() => <Redirect to="/app/products"/>} />
           <Route path="/app/catalogs" component={withRouter(CatalogsPage)}/>
           <Route path="/app/products" component={withRouter(ProductsPage)}/>
         </Switch>

@@ -1,6 +1,4 @@
 import React from "react";
-import { withRouter, Switch, Route } from "react-router-dom";
-
 import { Table, TableContainer, TableHead, TableBody, TableRow, TableCell, Paper} from "@material-ui/core"
 
 function Catalogs({columns, contracts}){

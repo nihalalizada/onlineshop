@@ -2,13 +2,11 @@ import * as React from 'react';
 import { Link } from 'react-router-dom'
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import { withRouter, Switch, Route } from "react-router-dom";
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import AdbIcon from '@mui/icons-material/Adb';
@@ -48,7 +46,6 @@ const Header = () => {
                 {pages.map((page) => (
                 <Button
                     component={Link}
-
                     key={page[0]}
                     to={page[1]}
                     sx={{ my: 2, color: 'white', display: 'block' }}

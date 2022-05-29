@@ -27,10 +27,10 @@ public class ShoppingCartController {
     @PostMapping("/add/{id}/{quantity}")
     public ResponseEntity<ShoppingCart> addProductToCart(HttpServletRequest request, @PathVariable("id") Long id,
                                                          @PathVariable("quantity") int quantity){
-        String sessionToken = (String) request.getSession(true).getAttribute("sessionToken");
+        String sessionToken = (String) request.getSession().getAttribute("sessionToken");
         if(sessionToken  == null){
             sessionToken = UUID.randomUUID().toString();
-            request.getSession().setAttribute("sessionAttribute", sessionToken);
+            request.getSession().setAttribute("sessionToken", sessionToken);
            return new ResponseEntity<>(shoppingCartService.createNewCart(id, sessionToken, quantity), HttpStatus.CREATED);
         }
         else{
@@ -40,13 +40,13 @@ public class ShoppingCartController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<ShoppingCart> removeProductFromCart(HttpServletRequest request, @PathVariable("id") Long itemId){
-        String sessionToken = (String) request.getSession(false).getAttribute("sessionToken");
+        String sessionToken = (String) request.getSession().getAttribute("sessionToken");
         return new ResponseEntity<>(shoppingCartService.deleteProductFromCart(itemId, sessionToken), HttpStatus.OK);
     }
 
     @GetMapping("/view")
     public ResponseEntity<Set<CartItem>> viewCartItems(HttpServletRequest request){
-        String sessionToken = (String) request.getSession(false).getAttribute("sessionToken");
+        String sessionToken = (String) request.getSession().getAttribute("sessionToken");
         if(sessionToken  == null){
             return new ResponseEntity<>(Collections.emptySet(), HttpStatus.NO_CONTENT);
         }
@@ -57,14 +57,15 @@ public class ShoppingCartController {
 
     @DeleteMapping("/clear")
     public ResponseEntity<ShoppingCart> clearCart(HttpServletRequest request){
-        String sessionToken = (String) request.getSession(false).getAttribute("sessionToken");
+        String sessionToken = (String) request.getSession().getAttribute("sessionToken");
         return new ResponseEntity<>(shoppingCartService.clearCart(sessionToken), HttpStatus.OK);
     }
 
     @DeleteMapping("/checkout")
     public void checkout(HttpServletRequest request){
-        String sessionToken = (String) request.getSession(false).getAttribute("sessionToken");
-        request.getSession(false).removeAttribute("sessionToken");
+        String sessionToken = (String) request.getSession().getAttribute("sessionToken");
+        request.getSession().removeAttribute("sessionToken");
+        request.getSession().invalidate();
         shoppingCartService.checkout(sessionToken);
     }
 }

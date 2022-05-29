@@ -14,18 +14,18 @@ public class Product {
     private long productId;
     @Column (nullable = false, unique = true)
     private String name;
+    @Column (nullable = false)
     private double price;
+    @Column(nullable = false)
     private long quantity = 0;
     private String description;
-
-
     @Column(nullable = false)
     private boolean isAvailable = false;
+    private String imageURL;
 
     @ManyToOne
+    @JoinColumn(name = "catalog_id")
     private Catalog catalog;
-
-    private String imageURL;
 
 
 

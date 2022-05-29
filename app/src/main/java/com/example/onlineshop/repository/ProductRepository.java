@@ -11,12 +11,12 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     @Transactional
     @Modifying
-    @Query(value = "Update products p set isAvailable =?2 where productId =?1", nativeQuery = true)
+    @Query(value = "Update products p set isAvailable =?2 where product_id =?1", nativeQuery = true)
     public void setAvailability(Long productId, boolean isAvailable);
 
     @Transactional
     @Modifying
-    @Query(value = "Update products p set quantity = p.quantity+1 where productId =?1", nativeQuery = true )
+    @Query(value = "Update products p set quantity = p.quantity+1 where product_id =?1", nativeQuery = true )
     public void incrementQuantity(Long productId);
 
     @Transactional

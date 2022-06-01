@@ -45,9 +45,10 @@ public class ProductController {
     public ResponseEntity<Product> updateProduct (@RequestBody Product product) {
         return new ResponseEntity<>(productService.updateProduct(product), HttpStatus.OK);
     }
-
-
-
+    @GetMapping(path = "/search")
+    public ResponseEntity<Product> searchProductByName(@RequestParam("name") String name) {
+        return new ResponseEntity<>( productService.getProductByName(name), HttpStatus.FOUND);
+    }
 
 
 

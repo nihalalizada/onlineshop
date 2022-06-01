@@ -19,8 +19,9 @@ public class Product {
     @Column(nullable = false)
     private long quantity = 0;
     private String description;
+
     @Column(nullable = false)
-    private boolean isAvailable = false;
+    private boolean isAvailable = true;
     private String imageURL;
 
     @ManyToOne

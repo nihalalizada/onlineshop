@@ -37,6 +37,8 @@ public class ProductServiceImpl implements ProductService {
         updateProduct.setName(product.getName());
         updateProduct.setCatalog(product.getCatalog());
         updateProduct.setQuantity(product.getQuantity());
+        updateProduct.setPrice(product.getPrice());
+        updateProduct.setAvailable(product.isAvailable());
         return productRepository.save(updateProduct);
     }
 
@@ -54,31 +56,25 @@ public class ProductServiceImpl implements ProductService {
         else 
             throw new ProductNotFoundException("Product with ID:" +productId+ "was not found");
     }
+    @Override
+    public Product getProductByName(String name) {
+        Optional<Product> product = productRepository.findByName(name);
+        if(product.isPresent())
+            return product.get();
+        else
+            throw new ProductNotFoundException("This product:" +name+ "was not found");
+    }
 
     @Override
     public void deleteProductById(Long productId) {
         Optional<Product> product = productRepository.findById(productId);
-        if (product.isPresent()) {
-            if (product.get().getQuantity() == 1) {
-                productRepository.setAvailability(productId, false);
-            }
+        if (product.isPresent() & product.get().getQuantity() > 1) {
             productRepository.decrementQuantity(productId);
-            productRepository.deleteById(productId);
+        } else if (product.get().getQuantity() == 1) {
+            productRepository.setAvailability(productId, false);
+            System.out.println("The availability is changed");
         }
-        else
-            throw new ProductNotFoundException("Product with ID:" +productId+ "does not exist");
-
     }
 
-    @Override
-    public List<Product> searchProductByName(Long productId, String name) {
-       ArrayList<Product> product = new ArrayList<Product>();
-        for (Product p : getAllProducts()) {
-            if (p.getName().equals(name)) {
-                return Collections.singletonList(p);
-            }
-        }
-        return null;
-    }
 }
 

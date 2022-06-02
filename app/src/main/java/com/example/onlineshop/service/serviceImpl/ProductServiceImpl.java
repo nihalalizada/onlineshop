@@ -68,13 +68,22 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProductById(Long productId) {
         Optional<Product> product = productRepository.findById(productId);
+        if (product.isPresent()) {
+            productRepository.deleteById(productId);
+        }
+        else throw new ProductNotFoundException("Product with ID: " +productId+ " does not exist");
+    }
+
+   /** @Override
+    public void deleteProductById(Long productId) {
+        Optional<Product> product = productRepository.findById(productId);
         if (product.isPresent() & product.get().getQuantity() > 1) {
             productRepository.decrementQuantity(productId);
         } else if (product.get().getQuantity() == 1) {
             productRepository.setAvailability(productId, false);
             System.out.println("The availability is changed");
         }
-    }
+    } */
 
 }
 

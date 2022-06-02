@@ -41,7 +41,7 @@ public class ShoppingCart {
     public double getTotalPrice() {
         for (CartItem item: items
              ) {
-            totalPrice += item.getProduct().getPrice();
+            totalPrice += item.getProduct().getPrice()*item.getQuantity();
         }
         return totalPrice;
     }

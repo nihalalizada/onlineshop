@@ -110,10 +110,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCart shoppingCart = shoppingCartRepository.findBySessionToken(sessionToken);
         for (CartItem item: shoppingCart.getItems()
         ) {
-            Product product = item.getProduct();
-            product.setQuantity(product.getQuantity()+item.getQuantity());
-            productService.updateProduct(product);
-            cartItemRepository.delete(item);
+            deleteProductFromCart(item.getId(), sessionToken);
         }
         shoppingCart.getItems().clear();
         return shoppingCartRepository.save(shoppingCart);
@@ -122,10 +119,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCart updateQuantity(Long id, String sessionToken, int newQuantity) {
         ShoppingCart shoppingCart = shoppingCartRepository.findBySessionToken(sessionToken);
-        CartItem cartItem = shoppingCart.getItems()
-                .stream()
-                .filter(item -> item.getProduct().getProductId() == id)
-                        .findAny().orElseThrow(() -> new NoSuchCartItemException("No Cart Item with id="+ id));
+        CartItem cartItem = cartItemRepository.getById(id);
+        Product product = cartItem.getProduct();
+        product.setQuantity(product.getQuantity()-(newQuantity-cartItem.getQuantity()));
+        productService.updateProduct(product);
         cartItem.setQuantity(newQuantity);
         cartItemRepository.save(cartItem);
         return shoppingCartRepository.save(shoppingCart);

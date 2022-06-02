@@ -55,6 +55,13 @@ public class ShoppingCartController {
         }
     }
 
+    @PutMapping("/update/{id}/{quantity}")
+    public ResponseEntity<ShoppingCart> updateQuantity(HttpServletRequest request, @PathVariable("id") Long id,
+                                                         @PathVariable("quantity") int newQuantity){
+        String sessionToken = (String) request.getSession().getAttribute("sessionToken");
+        return new ResponseEntity<>(shoppingCartService.updateQuantity(id, sessionToken, newQuantity), HttpStatus.OK);
+    }
+
     @DeleteMapping("/clear")
     public ResponseEntity<ShoppingCart> clearCart(HttpServletRequest request){
         String sessionToken = (String) request.getSession().getAttribute("sessionToken");

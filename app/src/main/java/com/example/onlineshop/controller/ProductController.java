@@ -2,7 +2,6 @@ package com.example.onlineshop.controller;
 
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.service.serviceImpl.ProductServiceImpl;
-import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +40,7 @@ public class ProductController {
         productService.deleteProductById(productId);
         return new ResponseEntity<>("Product with ID:" +productId+ " was deleted", HttpStatus.OK);
     }
-     @PostMapping(path = "/update")
+     @PutMapping(path = "/update")
     public ResponseEntity<Product> updateProduct (@RequestBody Product product) {
         return new ResponseEntity<>(productService.updateProduct(product), HttpStatus.OK);
     }

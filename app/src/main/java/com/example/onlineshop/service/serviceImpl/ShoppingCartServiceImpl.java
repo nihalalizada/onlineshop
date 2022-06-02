@@ -1,8 +1,11 @@
 package com.example.onlineshop.service.serviceImpl;
 
+import com.example.onlineshop.exception.NoSuchCartItemException;
 import com.example.onlineshop.model.CartItem;
+import com.example.onlineshop.model.Product;
 import com.example.onlineshop.model.ShoppingCart;
 import com.example.onlineshop.repository.CartItemRepository;
+import com.example.onlineshop.repository.ProductRepository;
 import com.example.onlineshop.repository.ShoppingCartRepository;
 import com.example.onlineshop.service.ProductService;
 import com.example.onlineshop.service.ShoppingCartService;
@@ -21,6 +24,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private ProductService productService;
     @Autowired
     private CartItemRepository cartItemRepository;
+    @Autowired
+    private ProductRepository productRepository;
 
     @Override
     public ShoppingCart createNewCart(Long id, String sessionToken, int quantity) {
@@ -77,6 +82,18 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public ShoppingCart clearCart(String sessionToken) {
         ShoppingCart shoppingCart = shoppingCartRepository.findBySessionToken(sessionToken);
         shoppingCart.getItems().clear();
+        return shoppingCartRepository.save(shoppingCart);
+    }
+
+    @Override
+    public ShoppingCart updateQuantity(Long id, String sessionToken, int newQuantity) {
+        ShoppingCart shoppingCart = shoppingCartRepository.findBySessionToken(sessionToken);
+        CartItem cartItem = shoppingCart.getItems()
+                .stream()
+                .filter(item -> item.getProduct().getProductId() == id)
+                        .findAny().orElseThrow(() -> new NoSuchCartItemException("No Cart Item with id="+ id));
+        cartItem.setQuantity(newQuantity);
+        cartItemRepository.save(cartItem);
         return shoppingCartRepository.save(shoppingCart);
     }
 }

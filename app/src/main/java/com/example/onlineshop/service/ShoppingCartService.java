@@ -14,4 +14,5 @@ public interface ShoppingCartService {
     Set<CartItem> getCartItems(String sessionToken);
     void checkout(String sessionToken);
     ShoppingCart clearCart(String sessionToken);
+    ShoppingCart updateQuantity(Long id, String sessionToken, int newQuantity);
 }

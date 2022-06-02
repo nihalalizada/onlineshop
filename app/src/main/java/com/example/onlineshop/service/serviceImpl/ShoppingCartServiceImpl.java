@@ -1,6 +1,9 @@
 package com.example.onlineshop.service.serviceImpl;
 
 import com.example.onlineshop.exception.NoSuchCartItemException;
+import com.example.onlineshop.exception.OutOfStockException;
+import com.example.onlineshop.exception.ProductNotFoundException;
+import com.example.onlineshop.exception.ShoppingCartException;
 import com.example.onlineshop.model.CartItem;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.model.ShoppingCart;
@@ -30,40 +33,64 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCart createNewCart(Long id, String sessionToken, int quantity) {
         ShoppingCart shoppingCart = new ShoppingCart();
+        Product product = productRepository.getById(id);
         CartItem cartItem = new CartItem();
         cartItem.setQuantity(quantity);
         cartItem.setDate(new Date());
-        cartItem.setProduct(productService.getProductById(id));
+        cartItem.setProduct(product);
         shoppingCart.setSessionToken(sessionToken);
-        shoppingCart.getItems().add(cartItem);
-        return shoppingCartRepository.save(shoppingCart);
+        if (shoppingCart.getItems().add(cartItem)){
+            product.setQuantity(product.getQuantity()-quantity);
+            return shoppingCartRepository.save(shoppingCart);
+        }
+        else
+            throw new ShoppingCartException("Product cannot be added to the shopping cart!");
     }
 
     @Override
     public ShoppingCart addProductToCart(Long id, String sessionToken, int quantity) {
         ShoppingCart shoppingCart = shoppingCartRepository.findBySessionToken(sessionToken);
+        Product product = productService.getProductById(id);
         for (CartItem item: shoppingCart.getItems()
              ) {
             if(item.getProduct().getProductId() == id){
-                item.setQuantity(item.getQuantity()+quantity);
-                return shoppingCartRepository.save(shoppingCart);
+                if(quantity<product.getQuantity()){
+                    item.setQuantity(item.getQuantity()+quantity);
+                    product.setQuantity(product.getQuantity()-quantity);
+                    productService.updateProduct(product);
+                    return shoppingCartRepository.save(shoppingCart);
+                }
+                else
+                    throw new OutOfStockException("Quantity not available!");
             }
         }
         CartItem cartItem = new CartItem();
         cartItem.setQuantity(quantity);
         cartItem.setDate(new Date());
-        cartItem.setProduct(productService.getProductById(id));
-        shoppingCart.getItems().add(cartItem);
-        return shoppingCartRepository.save(shoppingCart);
+        cartItem.setProduct(product);
+        if (shoppingCart.getItems().add(cartItem)){
+            product.setQuantity(product.getQuantity()-quantity);
+            productService.updateProduct(product);
+            return shoppingCartRepository.save(shoppingCart);
+        }
+        else
+            throw new ShoppingCartException("Product cannot be added to the shopping cart!");
     }
 
     @Override
     public ShoppingCart deleteProductFromCart(long itemId, String sessionToken) {
         ShoppingCart shoppingCart = shoppingCartRepository.findBySessionToken(sessionToken);
         CartItem item = cartItemRepository.getById(itemId);
-        shoppingCart.getItems().remove(item);
-        cartItemRepository.delete(item);
-        return shoppingCartRepository.save(shoppingCart);
+        int quantity = item.getQuantity();
+        if(shoppingCart.getItems().remove(item)){
+            Product product = item.getProduct();
+            product.setQuantity(product.getQuantity()+quantity);
+            productService.updateProduct(product);
+            cartItemRepository.delete(item);
+            return shoppingCartRepository.save(shoppingCart);
+        }
+        else
+            throw new ShoppingCartException("Item could not be removed from shopping cart!");
     }
 
     @Override
@@ -81,6 +108,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCart clearCart(String sessionToken) {
         ShoppingCart shoppingCart = shoppingCartRepository.findBySessionToken(sessionToken);
+        for (CartItem item: shoppingCart.getItems()
+        ) {
+            Product product = item.getProduct();
+            product.setQuantity(product.getQuantity()+item.getQuantity());
+            productService.updateProduct(product);
+            cartItemRepository.delete(item);
+        }
         shoppingCart.getItems().clear();
         return shoppingCartRepository.save(shoppingCart);
     }

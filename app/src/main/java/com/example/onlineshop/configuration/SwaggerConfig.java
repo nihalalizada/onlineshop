@@ -15,7 +15,7 @@ public class SwaggerConfig {
         return new OpenAPI()
                 .info(new Info().title("OnlineShop API")
                         .description("simple online shop web app")
-                        .version("v0.0.1")
+                        .version("v1.0.0")
                         .license(new License().name("Apache 2.0").url("http://spingdoc.org")))
                 .externalDocs(new ExternalDocumentation()
                         .description("Documentation on Github")

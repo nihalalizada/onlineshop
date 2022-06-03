@@ -8,11 +8,11 @@ import java.util.Set;
 
 public interface ShoppingCartService {
 
-    ShoppingCart createNewCart(Long id, String sessionToken, int quantity);
-    ShoppingCart addProductToCart(Long id, String sessionToken, int quantity);
-    ShoppingCart deleteProductFromCart(long productId, String sessionToken);
+    ShoppingCart createNewCart(Long productId, String sessionToken, int quantity);
+    ShoppingCart addProductToCart(Long productId, String sessionToken, int quantity);
+    ShoppingCart deleteProductFromCart(Long productId, String sessionToken);
     Set<CartItem> getCartItems(String sessionToken);
     void checkout(String sessionToken);
     ShoppingCart clearCart(String sessionToken);
-    ShoppingCart updateQuantity(Long id, String sessionToken, int newQuantity);
+    ShoppingCart updateQuantity(Long productId, String sessionToken, int newQuantity);
 }

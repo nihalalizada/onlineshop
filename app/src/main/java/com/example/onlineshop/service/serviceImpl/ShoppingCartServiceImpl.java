@@ -31,9 +31,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private ProductRepository productRepository;
 
     @Override
-    public ShoppingCart createNewCart(Long id, String sessionToken, int quantity) {
+    public ShoppingCart createNewCart(Long productId, String sessionToken, int quantity) {
         ShoppingCart shoppingCart = new ShoppingCart();
-        Product product = productRepository.getById(id);
+        Product product = productRepository.getById(productId);
+        if(!product.isAvailable()){
+            throw new OutOfStockException("This product is not available at moment! It may be out of stock. try again later.");
+        }
+        if(quantity > product.getQuantity()){
+            throw new ShoppingCartException("The requested quantity is not available anymore! only " + product.getQuantity() + " items are still available");
+        }
         CartItem cartItem = new CartItem();
         cartItem.setQuantity(quantity);
         cartItem.setDate(new Date());
@@ -41,27 +47,36 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         shoppingCart.setSessionToken(sessionToken);
         if (shoppingCart.getItems().add(cartItem)){
             product.setQuantity(product.getQuantity()-quantity);
+            if(product.getQuantity()<=0){
+                product.setAvailable(false);
+            }
+            productService.updateProduct(product);
             return shoppingCartRepository.save(shoppingCart);
         }
         else
-            throw new ShoppingCartException("Product cannot be added to the shopping cart!");
+            throw new ShoppingCartException("Product cannot be added to the shopping cart! try again.");
     }
 
     @Override
-    public ShoppingCart addProductToCart(Long id, String sessionToken, int quantity) {
+    public ShoppingCart addProductToCart(Long productId, String sessionToken, int quantity) {
         ShoppingCart shoppingCart = shoppingCartRepository.findBySessionToken(sessionToken);
-        Product product = productService.getProductById(id);
+        Product product = productService.getProductById(productId);
+        if(!product.isAvailable()){
+            throw new OutOfStockException("This product is not available at moment! It may be out of stock. try again later.");
+        }
+        if(quantity > product.getQuantity()){
+            throw new ShoppingCartException("The requested quantity is not available anymore! only " + product.getQuantity() + " items are still available");
+        }
         for (CartItem item: shoppingCart.getItems()
              ) {
-            if(item.getProduct().getProductId() == id){
-                if(quantity<product.getQuantity()){
-                    item.setQuantity(item.getQuantity()+quantity);
-                    product.setQuantity(product.getQuantity()-quantity);
-                    productService.updateProduct(product);
-                    return shoppingCartRepository.save(shoppingCart);
+            if(item.getProduct().getProductId() == productId){
+                item.setQuantity(item.getQuantity()+quantity);
+                product.setQuantity(product.getQuantity()-quantity);
+                if(product.getQuantity()<=0){
+                    product.setAvailable(false);
                 }
-                else
-                    throw new OutOfStockException("Quantity not available!");
+                productService.updateProduct(product);
+                return shoppingCartRepository.save(shoppingCart);
             }
         }
         CartItem cartItem = new CartItem();
@@ -70,6 +85,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         cartItem.setProduct(product);
         if (shoppingCart.getItems().add(cartItem)){
             product.setQuantity(product.getQuantity()-quantity);
+            if(product.getQuantity()<=0){
+                product.setAvailable(false);
+            }
             productService.updateProduct(product);
             return shoppingCartRepository.save(shoppingCart);
         }
@@ -78,13 +96,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public ShoppingCart deleteProductFromCart(long itemId, String sessionToken) {
+    public ShoppingCart deleteProductFromCart(Long itemId, String sessionToken) {
         ShoppingCart shoppingCart = shoppingCartRepository.findBySessionToken(sessionToken);
         CartItem item = cartItemRepository.getById(itemId);
         int quantity = item.getQuantity();
         if(shoppingCart.getItems().remove(item)){
             Product product = item.getProduct();
             product.setQuantity(product.getQuantity()+quantity);
+            if(product.getQuantity()>0){
+                product.setAvailable(true);
+            }
             productService.updateProduct(product);
             cartItemRepository.delete(item);
             return shoppingCartRepository.save(shoppingCart);
@@ -108,20 +129,44 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public ShoppingCart clearCart(String sessionToken) {
         ShoppingCart shoppingCart = shoppingCartRepository.findBySessionToken(sessionToken);
-        for (CartItem item: shoppingCart.getItems()
+        Set<CartItem> items = shoppingCart.getItems();
+        Iterator<CartItem> iterator = items.iterator();
+        while (iterator.hasNext()) {
+            CartItem cartItem = iterator.next();
+            int quantity = cartItem.getQuantity();
+            Product product = cartItem.getProduct();
+            product.setQuantity(product.getQuantity()+quantity);
+            if(product.getQuantity()>0){
+                product.setAvailable(true);
+            }
+            productService.updateProduct(product);
+            iterator.remove();
+            cartItemRepository.delete(cartItem);
+        }
+        /*for (CartItem item: shoppingCart.getItems()
         ) {
             deleteProductFromCart(item.getId(), sessionToken);
         }
+         */
         shoppingCart.getItems().clear();
         return shoppingCartRepository.save(shoppingCart);
     }
 
     @Override
-    public ShoppingCart updateQuantity(Long id, String sessionToken, int newQuantity) {
+    public ShoppingCart updateQuantity(Long itemId, String sessionToken, int newQuantity) {
         ShoppingCart shoppingCart = shoppingCartRepository.findBySessionToken(sessionToken);
-        CartItem cartItem = cartItemRepository.getById(id);
+        CartItem cartItem = cartItemRepository.getById(itemId);
         Product product = cartItem.getProduct();
+        if(newQuantity > product.getQuantity()){
+            throw new ShoppingCartException("The requested quantity is not available anymore! only " + product.getQuantity() + " items are still available");
+        }
         product.setQuantity(product.getQuantity()-(newQuantity-cartItem.getQuantity()));
+        if(product.getQuantity()<=0){
+            product.setAvailable(false);
+        }
+        else if(product.getQuantity()>0){
+            product.setAvailable(true);
+        }
         productService.updateProduct(product);
         cartItem.setQuantity(newQuantity);
         cartItemRepository.save(cartItem);

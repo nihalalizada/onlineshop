@@ -24,22 +24,22 @@ public class ShoppingCartController {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
-    @PostMapping("/add/{id}/{quantity}")
-    public ResponseEntity<ShoppingCart> addProductToCart(HttpServletRequest request, @PathVariable("id") Long id,
+    @PostMapping("/add/{product_id}/{quantity}")
+    public ResponseEntity<ShoppingCart> addProductToCart(HttpServletRequest request, @PathVariable("product_id") Long productId,
                                                          @PathVariable("quantity") int quantity){
         String sessionToken = (String) request.getSession().getAttribute("sessionToken");
         if(sessionToken  == null){
             sessionToken = UUID.randomUUID().toString();
             request.getSession().setAttribute("sessionToken", sessionToken);
-           return new ResponseEntity<>(shoppingCartService.createNewCart(id, sessionToken, quantity), HttpStatus.CREATED);
+           return new ResponseEntity<>(shoppingCartService.createNewCart(productId, sessionToken, quantity), HttpStatus.CREATED);
         }
         else{
-            return new ResponseEntity<>(shoppingCartService.addProductToCart(id, sessionToken, quantity), HttpStatus.OK);
+            return new ResponseEntity<>(shoppingCartService.addProductToCart(productId, sessionToken, quantity), HttpStatus.OK);
         }
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<ShoppingCart> removeProductFromCart(HttpServletRequest request, @PathVariable("id") Long itemId){
+    @DeleteMapping("/delete/{item_id}")
+    public ResponseEntity<ShoppingCart> removeProductFromCart(HttpServletRequest request, @PathVariable("item_id") Long itemId){
         String sessionToken = (String) request.getSession().getAttribute("sessionToken");
         return new ResponseEntity<>(shoppingCartService.deleteProductFromCart(itemId, sessionToken), HttpStatus.OK);
     }
@@ -55,11 +55,11 @@ public class ShoppingCartController {
         }
     }
 
-    @PutMapping("/update/{id}/{quantity}")
-    public ResponseEntity<ShoppingCart> updateQuantity(HttpServletRequest request, @PathVariable("id") Long id,
+    @PutMapping("/update/{item_id}/{quantity}")
+    public ResponseEntity<ShoppingCart> updateQuantity(HttpServletRequest request, @PathVariable("item_id") Long itemId,
                                                          @PathVariable("quantity") int newQuantity){
         String sessionToken = (String) request.getSession().getAttribute("sessionToken");
-        return new ResponseEntity<>(shoppingCartService.updateQuantity(id, sessionToken, newQuantity), HttpStatus.OK);
+        return new ResponseEntity<>(shoppingCartService.updateQuantity(itemId, sessionToken, newQuantity), HttpStatus.OK);
     }
 
     @DeleteMapping("/clear")

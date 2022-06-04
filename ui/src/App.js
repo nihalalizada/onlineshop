@@ -3,6 +3,7 @@ import './App.css';
 import React from "react";
 import CatalogsPage from "./pages/Catalog/Catalog"
 import ProductsPage from "./pages/Product/Product"
+import AdminPage from "./pages/Admin/Admin"
 import Header from "./components/Header/Header"
 import {createBrowserHistory} from 'history';
 
@@ -16,19 +17,10 @@ function App(){
           <Route exact path="/" render={() => <Redirect to="/app/products"/>} />
           <Route path="/app/catalogs" component={withRouter(CatalogsPage)}/>
           <Route path="/app/products" component={withRouter(ProductsPage)}/>
+          <Route path="/app/admin" component={withRouter(AdminPage)}/>
         </Switch>
     </Router>
   );
-}
-function PublicRoute({component, ...rest}){
-  return(
-    <Route 
-    {...rest}
-    render={props =>
-      React.createElement(component, props)
-    }
-    />
-  )
 }
 
 export default App;

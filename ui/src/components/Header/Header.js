@@ -11,8 +11,12 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import AdbIcon from '@mui/icons-material/Adb';
 
-const pages = [['Products', '/app/products'], ['Catalogs', '/app/catalogs'], ['Contact', 'app/contact']];
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = [
+  ['Products', '/app/products'], 
+  ['Catalogs', '/app/catalogs'], 
+  ['Admin', '/app/admin'], 
+  ['Contact', '/app/contact']
+];
 
 const Header = () => {
     function myfucn(){

@@ -31,7 +31,7 @@ function ProductDetail({product, openDetail, handleClick}){
         <DialogContent style={{minWidth:"450px", overflow: "hidden"}}>
             <Grid container spacing={4}>
                 <Grid item xs={4}>
-                    <img src={require("../../images/no-image.JPG")}></img>
+                    <img src={product.imageURL} style={{maxWidth: "150px", maxHeight: "173px"}}></img>
                 </Grid>
                 <Grid item xs={6}   >
                     <Typography 

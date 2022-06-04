@@ -9,7 +9,8 @@ function ProductsPage(){
             description : "very cool",
             quantity : "3",
             isAvailable: "false",
-            catalog: "myCatalog"
+            catalog: "myCatalog",
+            imageURL: "https://content.optimumnutrition.com/i/on/on-on-C101191_Image_01?locale=de-de,en-gb,*&layer0=$PDP_003$"
         },
         {
             productId : "123",
@@ -17,7 +18,8 @@ function ProductsPage(){
             description : "kinda cool",
             quantity : "9",
             isAvailable: "false",
-            catalog: "myCatalog"
+            catalog: "myCatalog",
+            imageURL: "https://content.optimumnutrition.com/i/on/on-on-C101191_Image_01?locale=de-de,en-gb,*&layer0=$PDP_003$"            
         }
     ]
     

@@ -5,7 +5,7 @@
 
 
 
-* Navigate to the ui folder:
+* Navigate to the ui folder :
 
 ```sh
 
@@ -18,7 +18,7 @@ npm install
 
 ```
 
-* Start:
+* Start :
 ```sh
 npm start
 ```

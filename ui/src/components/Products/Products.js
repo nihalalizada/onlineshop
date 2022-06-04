@@ -23,11 +23,11 @@ function Products({columns, contracts}){
                 </TableRow>
             </TableHead>
             <TableBody>
-                {contracts.map((c ,i) => (
+                 {contracts.map((c ,i) => (
                     <TableRow key = {i} >
                         {columns.map(col => <TableCell key = {col[0]} onClick={() => handleClick(c)}>{c[col[1]]}</TableCell>)}
                     </TableRow>
-                ))}
+                ))} 
             </TableBody>
         </Table>
     </TableContainer>)

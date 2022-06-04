@@ -10,6 +10,7 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import AdbIcon from '@mui/icons-material/Adb';
+import CartDialog from './../CartDialog/CartDialog'
 
 const pages = [
   ['Products', '/app/products'], 
@@ -19,9 +20,15 @@ const pages = [
 ];
 
 const Header = () => {
-    function myfucn(){
-       console.log("pressed")
+  const [openCart, setOpenCart] = React.useState(false);
+  function handleClick(){
+    if (openCart === false){
+        console.log("Opening Cart")
+        setOpenCart(true);
+    }else {
+      setOpenCart(false);
     }
+}
 
   return (
     <AppBar position="static" style={{background: "grey"}}>
@@ -61,8 +68,9 @@ const Header = () => {
 
             <Box sx={{ flexGrow: 0 }}>
                 <Tooltip title="Shopping Cart">
-                <IconButton onClick={myfucn} sx={{ p: 0 }}>
+                <IconButton onClick={handleClick} sx={{ p: 0 }}>
                     <ShoppingCartIcon style={{color:"white"}}/>
+                    <CartDialog openCart={openCart} handleClick={handleClick}/>
                 </IconButton>
                 </Tooltip>
             </Box>

@@ -55,13 +55,13 @@ function ProductDetail({product, openDetail, handleClick}){
                         >
                         Available : {quantity}
                     </Typography>
-                    <Typography
+                    {/* <Typography
                         variant="subtitle1" 
                         gutterBottom 
                         component="div"
                         >
                         Catalog : {catalog}
-                    </Typography>
+                    </Typography> */}
                 </Grid>
             </Grid>
         </DialogContent>

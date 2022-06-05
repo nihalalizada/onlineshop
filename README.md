@@ -22,3 +22,26 @@ npm install
 ```sh
 npm start
 ```
+
+##  Start up the Backend
+
+
+
+* Navigate to the app folder :
+
+```sh
+
+cd app
+```
+* run maven build :
+```sh
+
+mvn package -DskipTests
+
+```
+
+* Start :
+```sh
+java -Djasypt.encryptor.password=progex -jar target\online-shop-0.0.1-SNAPSHOT.jar
+```
+

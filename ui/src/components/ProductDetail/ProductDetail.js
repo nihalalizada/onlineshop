@@ -1,4 +1,5 @@
 import React from "react";
+import { sendRequestWithPayload, sendRequest } from "./../../context/ApiContext"
 import { Dialog, DialogTitle, Grid, DialogContent, DialogActions, Button, Typography, requirePropFactory} from "@material-ui/core"
 
 function ProductDetail({product, openDetail, handleClick}){
@@ -14,10 +15,19 @@ function ProductDetail({product, openDetail, handleClick}){
         setProductName(product.name);
         setProductId(product.productId);
         setDescription(product.description);
-        setQuantity(product.quantity);
+        setQuantity(1);
         setCatalog(product.catalog);
         setIsAvailable(product.isAvailable);
     })
+
+    async function addToCart(){
+        console.log("Adding " + product.name + " to cart.")
+        if (quantity > product.quantity){
+            console.log("Quantity bigger than the available quantity,");
+        }
+        await sendRequest('POST', "cart/add/" + productId + "/" + quantity);
+    }
+
 
     return( 
     <Dialog open={openDetail} onClose={handleClick} style={{
@@ -55,6 +65,13 @@ function ProductDetail({product, openDetail, handleClick}){
                         >
                         Available : {quantity}
                     </Typography>
+                    <Typography
+                        variant="subtitle1" 
+                        gutterBottom 
+                        component="div"
+                        >
+                        Price : {product.price} EUR
+                    </Typography>
                     {/* <Typography
                         variant="subtitle1" 
                         gutterBottom 
@@ -67,7 +84,7 @@ function ProductDetail({product, openDetail, handleClick}){
         </DialogContent>
         <DialogActions>
             <Button onClick={handleClick}>Close</Button>
-            <Button onClick={handleClick}>Add to Cart</Button>
+            <Button onClick={() => addToCart()}>Add to Cart</Button>
         </DialogActions>
     </Dialog>)
 }

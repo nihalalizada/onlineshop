@@ -34,7 +34,8 @@ function ProductsPage({ history }) {
 
     console.log(products);
     return (
-        <> <Grid container style={{ paddingLeft: "83%", paddingTop: ".3%" }}>
+        <> 
+        <Grid container style={{ paddingLeft: "83%", paddingTop: ".3%" , background: "rgb(231, 235, 240)"}}>
             <TextField
                 id="outlined-required"
                 label="Search"
@@ -50,8 +51,9 @@ function ProductsPage({ history }) {
                 </Tooltip>
             </Box>
         </Grid>
+        <Grid container spacing={2} style={{ width: '100%',  height: "90.5vh", background: "rgb(231, 235, 240)", padding: "2%", margin: "0px" }}>
             {products === undefined ? <></> :
-                <><Products contracts={products} columns={columns}></Products></>}</>
+                <><Products contracts={products} columns={columns}></Products></>}</Grid></>
     )
 }
 

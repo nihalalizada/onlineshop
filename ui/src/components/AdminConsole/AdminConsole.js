@@ -1,5 +1,4 @@
 import React from "react";
-import ProductDetail from "../ProductDetail/ProductDetail"
 import { styled } from '@mui/material/styles';
 import { Box, Grid, Paper, Typography, TextField, Button } from "@material-ui/core"
 import { sendRequestWithPayload, sendRequest } from "./../../context/ApiContext"
@@ -42,16 +41,6 @@ function AdminConsole({ columns, contracts }) {
     const [catalogDeleteId, setCatalogDeleteId] = React.useState("");
     const [productDeleteId, setProductDeleteId] = React.useState("");
 
-
-    function handleClick(c) {
-        if (openDetail === false) {
-            console.log("opening " + c.name)
-            setOpenDetail(true);
-        } else {
-            setOpenDetail(false);
-        }
-    }
-
     async function handleClickCatalog(method, endpoint, id, name, description) {
         console.log("Creating/Updating Catalog")
         const payload = {
@@ -63,8 +52,19 @@ function AdminConsole({ columns, contracts }) {
         console.log(result);
     }
 
-    async function handleClickProduct (method, endpoint, id, name, price, quantity, description, image, catalog) {
+    async function getCatalog() {
+        const catalogFound = await sendRequest('GET', "api/catalogs/" + catalogId);
+        console.log(catalogFound);
+    }
+
+    async function handleClickProduct(method, endpoint, id, name, price, quantity, description, image, catalogId) {
         console.log("Creating Product")
+        const catalogFound = await sendRequest('GET', "api/catalogs/" + catalogId);
+        if (catalogFound.catalogId === undefined) {
+            console.log("catalogue not found!")
+            return;
+        }
+        console.log(catalogFound)
         const payload = {
             productId: id,
             name: name,
@@ -73,9 +73,9 @@ function AdminConsole({ columns, contracts }) {
             description: description,
             imageURL: image,
             catalog: {
-                catalogId: 7,
-                name: catalog,
-                description: "string"
+                catalogId: catalogFound.catalogId,
+                name: catalogFound.name,
+                description: catalogFound.description
             },
             available: true
         }
@@ -86,15 +86,15 @@ function AdminConsole({ columns, contracts }) {
 
     async function handleClickDelete(type, id) {
         console.log("deleting " + type + " " + id)
-        const result = sendRequest("DELETE",   "api/" + type + "/delete/" + id);
+        const result = sendRequest("DELETE", "api/" + type + "/delete/" + id);
         console.log(result);
     }
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2} style={{ width: "96%", margin: "2%" }}>
+            <Grid container spacing={2} style={{ width: '100%', height: "94.5vh", background: "rgb(231, 235, 240)", padding: "2%", margin: "0px" }}>
                 <Grid item xs={6} md={8}>
-                    <Item style={{height: "230px"}}>
+                    <Item style={{ height: "230px" }}>
                         <Typography variant="h6" gutterBottom component="div">Create Product</Typography>
                         <Grid container spacing={2} >
 
@@ -104,7 +104,7 @@ function AdminConsole({ columns, contracts }) {
                                     id="outlined-required"
                                     label="Product Name"
                                     value={productName}
-                                    onChange={(event) => setProductName(event.target.value)}                                />
+                                    onChange={(event) => setProductName(event.target.value)} />
                             </Grid>
                             <Grid item >
                                 <TextField
@@ -112,7 +112,7 @@ function AdminConsole({ columns, contracts }) {
                                     id="outlined-required"
                                     label="Product Description"
                                     value={productDescription}
-                                    onChange={(event) => setProductDescription(event.target.value)}   
+                                    onChange={(event) => setProductDescription(event.target.value)}
                                 />
                             </Grid>
                             <Grid item >
@@ -121,7 +121,7 @@ function AdminConsole({ columns, contracts }) {
                                     id="outlined-required"
                                     label="Product ID"
                                     value={productId}
-                                    onChange={(event) => setProductId(event.target.value)}   
+                                    onChange={(event) => setProductId(event.target.value)}
                                 />
                             </Grid>
 
@@ -131,16 +131,16 @@ function AdminConsole({ columns, contracts }) {
                                     id="outlined-required"
                                     label="Quantity"
                                     value={productQuantity}
-                                    onChange={(event) => setProductQuantity(event.target.value)}   
+                                    onChange={(event) => setProductQuantity(event.target.value)}
                                 />
                             </Grid>
                             <Grid item >
                                 <TextField
                                     required
                                     id="outlined-required"
-                                    label="Catalog"
+                                    label="Catalog ID"
                                     value={productCatalog}
-                                    onChange={(event) => setProductCatalog(event.target.value)}   
+                                    onChange={(event) => setProductCatalog(event.target.value)}
                                 />
                             </Grid>
                             <Grid item >
@@ -149,7 +149,7 @@ function AdminConsole({ columns, contracts }) {
                                     id="outlined-required"
                                     label="Image Link"
                                     value={productImage}
-                                    onChange={(event) => setProductImage(event.target.value)}   
+                                    onChange={(event) => setProductImage(event.target.value)}
                                 />
                             </Grid>
                             <Grid item >
@@ -158,7 +158,7 @@ function AdminConsole({ columns, contracts }) {
                                     id="outlined-required"
                                     label="Price"
                                     value={productPrice}
-                                    onChange={(event) => setProductPrice(event.target.value)}   
+                                    onChange={(event) => setProductPrice(event.target.value)}
                                 />
                             </Grid>
                             <div style={{ width: "100%", margin: "2%" }}>
@@ -235,7 +235,7 @@ function AdminConsole({ columns, contracts }) {
                                 value={productDeleteId}
                                 onChange={(event) => setProductDeleteId(event.target.value)}
                             />
-                   
+
                             <Button
                                 onClick={() => handleClickDelete("products", productDeleteId)}
                                 variant="contained"
@@ -249,32 +249,40 @@ function AdminConsole({ columns, contracts }) {
                     </Item>
                 </Grid>
                 <Grid item xs={6} md={4}>
-                    <Item>xs=6 md=8</Item>
+                    <Item>
+                        <Button
+                            onClick={getCatalog}
+                            variant="contained"
+
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            Get
+                        </Button></Item>
                 </Grid>
                 <Grid item xs={6} md={4}>
                     <Item>                   <Grid item >
-                            <Typography variant="h6" gutterBottom component="div">Delete Catalog</Typography>
-                            <TextField
-                                required
-                                id="outlined-required"
-                                label="Catalog ID"
-                                value={catalogDeleteId}
-                                onChange={(event) => setCatalogDeleteId(event.target.value)}
-                            />
-                   
-                            <Button
-                                onClick={() => handleClickDelete("catalogs", catalogDeleteId)}
-                                variant="contained"
-                                sx={{ my: 2, color: 'white', display: 'block' }}
-                            >
-                                Delete
-                            </Button>
+                        <Typography variant="h6" gutterBottom component="div">Delete Catalog</Typography>
+                        <TextField
+                            required
+                            id="outlined-required"
+                            label="Catalog ID"
+                            value={catalogDeleteId}
+                            onChange={(event) => setCatalogDeleteId(event.target.value)}
+                        />
 
-                        </Grid>
+                        <Button
+                            onClick={() => handleClickDelete("catalogs", catalogDeleteId)}
+                            variant="contained"
+                            sx={{ my: 2, color: 'white', display: 'block' }}
+                        >
+                            Delete
+                        </Button>
+
+                    </Grid>
                     </Item>
                 </Grid>
                 <Grid item xs={6} md={8}>
-                    <Item style={{height: "230px"}}>
+                    <Item style={{ height: "230px" }}>
                         <Typography variant="h6" gutterBottom component="div">Edit Product</Typography>
                         <Grid container spacing={2} >
 
@@ -284,7 +292,7 @@ function AdminConsole({ columns, contracts }) {
                                     id="outlined-required"
                                     label="Product Name"
                                     value={productUpdateName}
-                                    onChange={(event) => setProductUpdateName(event.target.value)}                                />
+                                    onChange={(event) => setProductUpdateName(event.target.value)} />
                             </Grid>
                             <Grid item >
                                 <TextField
@@ -292,7 +300,7 @@ function AdminConsole({ columns, contracts }) {
                                     id="outlined-required"
                                     label="Product Description"
                                     value={productUpdateDescription}
-                                    onChange={(event) => setProductUpdateDescription(event.target.value)}   
+                                    onChange={(event) => setProductUpdateDescription(event.target.value)}
                                 />
                             </Grid>
                             <Grid item >
@@ -301,7 +309,7 @@ function AdminConsole({ columns, contracts }) {
                                     id="outlined-required"
                                     label="Product ID"
                                     value={productUpdateId}
-                                    onChange={(event) => setProductUpdateId(event.target.value)}   
+                                    onChange={(event) => setProductUpdateId(event.target.value)}
                                 />
                             </Grid>
 
@@ -311,16 +319,16 @@ function AdminConsole({ columns, contracts }) {
                                     id="outlined-required"
                                     label="Quantity"
                                     value={productUpdateQuantity}
-                                    onChange={(event) => setProductUpdateQuantity(event.target.value)}   
+                                    onChange={(event) => setProductUpdateQuantity(event.target.value)}
                                 />
                             </Grid>
                             <Grid item >
                                 <TextField
                                     required
                                     id="outlined-required"
-                                    label="Catalog"
+                                    label="Catalog ID"
                                     value={productUpdateCatalog}
-                                    onChange={(event) => setProductUpdateCatalog(event.target.value)}   
+                                    onChange={(event) => setProductUpdateCatalog(event.target.value)}
                                 />
                             </Grid>
                             <Grid item >
@@ -329,7 +337,7 @@ function AdminConsole({ columns, contracts }) {
                                     id="outlined-required"
                                     label="Image Link"
                                     value={productUpdateImage}
-                                    onChange={(event) => setProductUpdateImage(event.target.value)}   
+                                    onChange={(event) => setProductUpdateImage(event.target.value)}
                                 />
                             </Grid>
                             <Grid item >
@@ -338,7 +346,7 @@ function AdminConsole({ columns, contracts }) {
                                     id="outlined-required"
                                     label="Price"
                                     value={productUpdatePrice}
-                                    onChange={(event) => setProductUpdatePrice(event.target.value)}   
+                                    onChange={(event) => setProductUpdatePrice(event.target.value)}
                                 />
                             </Grid>
                             <div style={{ width: "100%", margin: "2%" }}>
@@ -402,11 +410,18 @@ function AdminConsole({ columns, contracts }) {
                                 </Grid>
                             </div>
                         </Grid>
+
                     </Item>
                 </Grid>
+                <Grid item xs={6} md={4} style={{ height: "40%" }}></Grid>
+                <Grid item xs={6} md={8}></Grid>
+
             </Grid>
         </Box>
     )
 }
+
+
+
 
 export default AdminConsole

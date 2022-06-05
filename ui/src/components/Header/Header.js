@@ -20,15 +20,7 @@ const pages = [
 ];
 
 const Header = () => {
-  const [openCart, setOpenCart] = React.useState(false);
-  function handleClick(){
-    if (openCart === false){
-        console.log("Opening Cart")
-        setOpenCart(true);
-    }else {
-      setOpenCart(false);
-    }
-}
+
 
   return (
     <AppBar position="static" style={{background: "grey"}}>
@@ -67,12 +59,9 @@ const Header = () => {
             </Box>
 
             <Box sx={{ flexGrow: 0 }}>
-                <Tooltip title="Shopping Cart">
-                <IconButton onClick={handleClick} sx={{ p: 0 }}>
-                    <ShoppingCartIcon style={{color:"white"}}/>
-                    <CartDialog openCart={openCart} handleClick={handleClick}/>
-                </IconButton>
-                </Tooltip>
+
+              <CartDialog />
+
             </Box>
 
         </Toolbar>

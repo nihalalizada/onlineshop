@@ -1,7 +1,6 @@
 import React from "react";
-import ProductDetail from "../ProductDetail/ProductDetail"
 import { styled } from '@mui/material/styles';
-import { Box, Grid, Paper, Typography, TextField, Button } from "@material-ui/core"
+import { Box, Grid, Paper, Typography, Button } from "@material-ui/core"
 
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -33,7 +32,7 @@ function AdminPrompt({ setIsAdmin }) {
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2} style={{ width: "96%", marginLeft: "18%", marginTop:"2%"}}>
+            <Grid container spacing={2}  style={{ width: '100%', height: "94.5vh", background: "rgb(231, 235, 240)", padding: "2%", margin: "0px",  paddingLeft: "18%", paddingTop:"2%"}}>
                 <Grid item xs={6} md={8}>
                     <Item>
                         <Typography variant="h6" gutterBottom component="div">Admin Prompt</Typography>

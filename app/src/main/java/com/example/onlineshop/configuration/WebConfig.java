@@ -13,5 +13,8 @@ public class WebConfig extends WebMvcConfigurerAdapter {
         registry.addMapping("/api/**")
         .allowedOrigins("*")
         .allowedMethods("GET", "POST", "PUT", "DELETE");
+        registry.addMapping("/cart/**")
+        .allowedOrigins("*")
+        .allowedMethods("GET", "POST", "PUT", "DELETE");
     }
 }

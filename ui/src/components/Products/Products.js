@@ -14,7 +14,7 @@ function Products({columns, contracts}){
             setOpenDetail(false);
         }
     }
-    return(<TableContainer component={Paper} style={{width:"96%", margin: "2%"}}>
+    return(<TableContainer component={Paper} style={{width:"100%"}}>
             <ProductDetail product ={selectedProduct} openDetail={openDetail} handleClick={handleClick} />
         <Table>
             <TableHead>

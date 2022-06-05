@@ -2,7 +2,9 @@ import React from "react";
 import { Table, TableContainer, TableHead, TableBody, TableRow, TableCell, Paper} from "@material-ui/core"
 
 function Catalogs({columns, contracts}){
-    return(<TableContainer component={Paper} style={{width:"96%", margin: "2%"}}>
+    return(
+        
+    <TableContainer component={Paper} >
         <Table>
             <TableHead>
                 <TableRow>
@@ -17,7 +19,8 @@ function Catalogs({columns, contracts}){
                 ))}
             </TableBody>
         </Table>
-    </TableContainer>)
+    </TableContainer>
+    )
 }
 
 export default Catalogs

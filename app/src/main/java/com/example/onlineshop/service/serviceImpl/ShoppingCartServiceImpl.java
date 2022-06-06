@@ -118,6 +118,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public Set<CartItem> getCartItems(String sessionToken) {
         ShoppingCart shoppingCart = shoppingCartRepository.findBySessionToken(sessionToken);
+        if(shoppingCart == null){
+            return Collections.emptySet();
+        }
         return shoppingCart.getItems();
     }
 
@@ -144,11 +147,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             iterator.remove();
             cartItemRepository.delete(cartItem);
         }
-        /*for (CartItem item: shoppingCart.getItems()
-        ) {
-            deleteProductFromCart(item.getId(), sessionToken);
-        }
-         */
         shoppingCart.getItems().clear();
         return shoppingCartRepository.save(shoppingCart);
     }

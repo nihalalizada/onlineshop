@@ -47,12 +47,7 @@ public class ShoppingCartController {
     @GetMapping("/view")
     public ResponseEntity<Set<CartItem>> viewCartItems(HttpServletRequest request){
         String sessionToken = (String) request.getSession().getAttribute("sessionToken");
-        if(sessionToken  == null){
-            return new ResponseEntity<>(Collections.emptySet(), HttpStatus.NO_CONTENT);
-        }
-        else{
-            return new ResponseEntity<>(shoppingCartService.getCartItems(sessionToken), HttpStatus.FOUND);
-        }
+        return new ResponseEntity<>(shoppingCartService.getCartItems(sessionToken), HttpStatus.OK);
     }
 
     @PutMapping("/update/{item_id}/{quantity}")

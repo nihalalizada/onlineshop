@@ -1,5 +1,6 @@
 package com.example.onlineshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -13,6 +14,7 @@ import java.util.Date;
 @ToString
 @Entity
 @Table
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class CartItem implements Serializable {
 
     @Id

@@ -45,6 +45,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         cartItem.setDate(new Date());
         cartItem.setProduct(product);
         shoppingCart.setSessionToken(sessionToken);
+        shoppingCart.setDate(new Date());
         if (shoppingCart.getItems().add(cartItem)){
             product.setQuantity(product.getQuantity()-quantity);
             if(product.getQuantity()<=0){

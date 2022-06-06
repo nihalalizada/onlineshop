@@ -1,5 +1,6 @@
 package com.example.onlineshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +15,7 @@ import java.util.Set;
 @Setter
 @Entity
 @Table
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class ShoppingCart implements Serializable {
 
     @Id

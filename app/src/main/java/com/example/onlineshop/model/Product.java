@@ -1,5 +1,6 @@
 package com.example.onlineshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "products")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Product implements Serializable {
 
 

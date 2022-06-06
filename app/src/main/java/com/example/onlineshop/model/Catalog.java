@@ -1,5 +1,6 @@
 package com.example.onlineshop.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,6 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "catalogs")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class Catalog implements Serializable {
 
     @Id

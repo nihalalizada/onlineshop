@@ -19,13 +19,13 @@ function CartDialog({history}){
   }
 
     const columns = [
-        ["Name", "name"],
-        ["Price", "price"],
-        ["Description", "description"],
-        ["Quantity", "quantity"],
-        ["Catalog", "catalog"],
-        ["Product ID", "productId"],
-        ["Price", "price"]
+        ["ItemID", 'id'],
+        ["Name", 'product', 'name'],
+        ["Description", 'product', "description"],
+        ["Quantity", 'product', "quantity"],
+        // ["Catalog", 'product', "catalog"],
+        ["Product ID", 'product', "productId"],
+        ["Price", 'product', 'price'],
     ]
 
     async function clearCart(){
@@ -33,7 +33,6 @@ function CartDialog({history}){
         getCart(setItems);
     }
 
-    //TODO: When to call this?
     async function checkout(){
         await sendRequest('DELETE', "cart/checkout");
         getCart(setItems);
@@ -50,8 +49,17 @@ function CartDialog({history}){
     }, [openCart]
     )
 
-    function close(){
+    function getValue(c, col){
+        if (col.length === 2){
+            return c[col[1]]
+        }
+        else{
+            return c[col[1]][col[2]]
+        }
+    }
 
+    function close(c){
+       
     }
 
     return( 
@@ -84,7 +92,7 @@ function CartDialog({history}){
             {items === undefined ? <></>: 
                 items.map((c ,i) => (
                     <TableRow key = {i} >
-                        {columns.map(col => <TableCell key = {col[0]} onClick={() => handleClick(c)}>{c[col[1]]}</TableCell>)}
+                        {columns.map(col => <TableCell key = {col[0]+"-"+c.product.id} onClick={() => handleClick(c)}>{ getValue(c,col)} </TableCell>)}
                     </TableRow>
                 ))}
                 
@@ -105,7 +113,7 @@ function CartDialog({history}){
             
             <Button onClick={() => handleClick()}>Close</Button>
             <Button onClick={() => clearCart()}>Clear</Button>
-            <Button onClick={() => handleClick()}>Checkout</Button>
+            <Button onClick={() => checkout()}>Checkout</Button>
         </DialogActions>
     </Dialog></div>)
 }

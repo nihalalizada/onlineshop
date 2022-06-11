@@ -19,6 +19,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @RestController
 @RequestMapping("/cart")
+@CrossOrigin(origins = { "http://localhost:3000" }, allowedHeaders = "*", allowCredentials = "true")
 public class ShoppingCartController {
 
     @Autowired

@@ -1,6 +1,6 @@
 export async function sendRequestWithPayload(method, endpoint, payload){
     const headers= {"Content-Type" : "application/json", 'Access-Control-Allow-Origin':'*'}
-    const command = {method: method, headers, body : JSON.stringify(payload)};
+    const command = {method: method, headers, body : JSON.stringify(payload), credentials: 'include'};
     const resp = await fetch("http://localhost:8080/" + endpoint, command);
     const jsonRes = resp.json();
     console.log(jsonRes);
@@ -9,7 +9,7 @@ export async function sendRequestWithPayload(method, endpoint, payload){
 
 export async function sendRequest(method, endpoint){
     const headers= {'Access-Control-Allow-Origin':'*'}
-    const command = {method: method, headers};
+    const command = {method: method, headers, credentials: 'include'};
     const resp = await fetch("http://localhost:8080/" + endpoint, command);
     const jsonRes = resp.json();
     return jsonRes;
@@ -29,7 +29,7 @@ export async function getCatalogs(setCatalogs){
 }
 
 export async function getCart(setItems){
-    fetch(`http://localhost:8080/cart/view`)
+    fetch(`http://localhost:8080/cart/view`, {credentials: 'include'} )
     .then((res) => res.json())
     .then((data) => setItems(data));
 }

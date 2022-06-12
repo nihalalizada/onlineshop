@@ -14,6 +14,14 @@ function Products({columns, contracts}){
             setOpenDetail(false);
         }
     }
+    function getValue(c, col) {
+        if (col.length === 2) {
+            return c[col[1]]
+        }
+        else {
+            return c[col[1]][col[2]]
+        }
+    }
     return(<TableContainer component={Paper} style={{width:"100%"}}>
             <ProductDetail product ={selectedProduct} openDetail={openDetail} handleClick={handleClick} />
         <Table>
@@ -25,7 +33,7 @@ function Products({columns, contracts}){
             <TableBody>
                  {contracts.map((c ,i) => (
                     <TableRow key = {i} >
-                        {columns.map(col => <TableCell key = {col[0]} onClick={() => handleClick(c)}>{c[col[1]]}</TableCell>)}
+                        {columns.map(col => <TableCell key = {col[0]} onClick={() => handleClick(c)}>{ getValue(c,col)}</TableCell>)}
                     </TableRow>
                 ))} 
             </TableBody>

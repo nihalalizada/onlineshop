@@ -19,8 +19,7 @@ function ProductsPage({ history }) {
         ["Price", "price"],
         ["Description", "description"],
         ["Quantity", "quantity"],
-        ["Catalog", "catalog.name"],
-        ["Product ID", "productId"]
+        ["Catalog", "catalog", "name"]
     ]
 
     async function search() {

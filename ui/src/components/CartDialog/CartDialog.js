@@ -8,6 +8,7 @@ import { Dialog, DialogTitle, Grid, DialogContent, DialogActions, Button, Table,
 function CartDialog({ history }) {
     const [items, setItems] = React.useState();
     const [openCart, setOpenCart] = React.useState(false);
+    const [totalPrice, setTotalPrice] = React.useState(0);
     function handleClick() {
         if (openCart === false) {
             console.log("Opening Cart")
@@ -21,7 +22,7 @@ function CartDialog({ history }) {
         ["ItemID", 'id'],
         ["Name", 'product', 'name'],
         ["Description", 'product', "description"],
-        ["Quantity", 'product', "quantity"],
+        ["Quantity", "quantity"],
         // ["Catalog", 'product', "catalog"],
         ["Product ID", 'product', "productId"],
         ["Price", 'product', 'price'],
@@ -42,8 +43,24 @@ function CartDialog({ history }) {
         getCart(setItems);
     }
 
+    function getTotalPrice(){
+        if (items === undefined){
+            return 0
+        } else {
+            var total = 0
+            for(let i = 0; i < items.length; i++){
+                total += items[i]["quantity"] * items[i]["product"]["price"]
+            }
+            setTotalPrice(total)
+            return 0
+
+        }
+        
+    }
+
     React.useEffect(() => {
         getCart(setItems);
+        getTotalPrice();
     }, [openCart]
     )
 
@@ -84,6 +101,7 @@ function CartDialog({ history }) {
                             <TableHead>
                                 <TableRow>
                                     {columns.map(col => (<TableCell key={col[0]} > {col[0]} </TableCell>))}
+                                    <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -94,7 +112,10 @@ function CartDialog({ history }) {
                                             <TableCell><Button style={{height: "35px", marginTop:"12px"}} onClick={() => deleteItem(c.id)}>Delete</Button>    </TableCell>
                                         </TableRow>
                                     ))}
-
+                                     <TableRow key={"total"} >
+                                            <TableCell key={"total"}>Total Price: </TableCell>
+                                            <TableCell> {totalPrice} EUR </TableCell>
+                                        </TableRow>
                             </TableBody>
                         </Table>
                         {/* <div style={{height : "60px"}}>

@@ -7,7 +7,7 @@ function ProductDetail({product, openDetail, handleClick}){
     const [productId, setProductId] = React.useState('');
     const [description, setDescription] = React.useState('');
     const [quantity, setQuantity] = React.useState('');
-    const [quantityToAdd, setQuantityToAdd] = React.useState('');
+    const [quantityToAdd, setQuantityToAdd] = React.useState(1);
     const [catalog, setCatalog] = React.useState('');
     const [isAvailable, setIsAvailable] = React.useState(false);
 
@@ -19,7 +19,6 @@ function ProductDetail({product, openDetail, handleClick}){
         setQuantity(product.quantity);
         setCatalog(product.catalog.name);
         setIsAvailable(product.available);
-        setQuantityToAdd(1);
     }, [product])
     console.log(product)
     async function addToCart(){

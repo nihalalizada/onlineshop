@@ -4,6 +4,7 @@ import com.example.onlineshop.model.CartItem;
 import com.example.onlineshop.model.Product;
 import com.example.onlineshop.model.ShoppingCart;
 
+import java.util.Date;
 import java.util.Set;
 
 public interface ShoppingCartService {
@@ -15,4 +16,5 @@ public interface ShoppingCartService {
     void checkout(String sessionToken);
     ShoppingCart clearCart(String sessionToken);
     ShoppingCart updateQuantity(Long productId, String sessionToken, int newQuantity);
+    void deleteCarts();
 }

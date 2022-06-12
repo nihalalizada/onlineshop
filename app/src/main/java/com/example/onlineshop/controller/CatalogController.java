@@ -1,5 +1,7 @@
 package com.example.onlineshop.controller;
 
+import com.example.onlineshop.model.Product;
+import com.example.onlineshop.service.ProductService;
 import com.example.onlineshop.service.serviceImpl.CatalogServiceImpl;
 import com.example.onlineshop.model.Catalog;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ public class CatalogController {
 
     @Autowired
     private CatalogServiceImpl catalogService;
+
+    @Autowired
+    private ProductService productService;
 
     @PostMapping("/add")
     public ResponseEntity<Catalog> addCatalog(@RequestBody Catalog catalog){
@@ -40,5 +45,10 @@ public class CatalogController {
     @GetMapping("/{id}")
     public ResponseEntity<Catalog> getCatalog(@PathVariable("id") Long id){
         return new ResponseEntity<>(catalogService.getCatalogById(id), HttpStatus.FOUND);
+    }
+
+    @GetMapping("/{id}/products")
+    public ResponseEntity<List<Product>> getProductsByCatalog(@PathVariable("id") Long id){
+        return new ResponseEntity<>(productService.getProductsByCatalogId(id), HttpStatus.FOUND);
     }
 }

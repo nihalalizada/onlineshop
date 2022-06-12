@@ -66,6 +66,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<Product> getProductsByCatalogId(Long catalogId) {
+        return productRepository.getProductsByCatalogId(catalogId);
+    }
+
+    @Override
     public void deleteProductById(Long productId) {
         Optional<Product> product = productRepository.findById(productId);
         if (product.isPresent()) {

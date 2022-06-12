@@ -17,10 +17,11 @@ public class PaypalController {
 	public static final String SUCCESS_URL = "pay/success";
 	public static final String CANCEL_URL = "pay/cancel";
 
-	@GetMapping("/")
+	/*@GetMapping("/checkout")
 	public String home() {
 		return "home";
 	}
+	 */
 
 	@PostMapping("/pay")
 	public String payment(@RequestBody ShoppingCart shoppingCart) {
@@ -42,7 +43,7 @@ public class PaypalController {
 	
 	 @GetMapping(value = CANCEL_URL)
 	    public String cancelPay() {
-	        return "cancel";
+	        return "cancel.html";
 	    }
 
 	    @GetMapping(value = SUCCESS_URL)
@@ -51,7 +52,7 @@ public class PaypalController {
 	            Payment payment = paypalService.executePayment(paymentId, payerId);
 	            System.out.println(payment.toJSON());
 	            if (payment.getState().equals("approved")) {
-	                return "success";
+	                return "success.html";
 	            }
 	        } catch (PayPalRESTException e) {
 	         System.out.println(e.getMessage());

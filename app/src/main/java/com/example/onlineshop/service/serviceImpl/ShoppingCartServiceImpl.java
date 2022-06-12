@@ -1,8 +1,6 @@
 package com.example.onlineshop.service.serviceImpl;
 
-import com.example.onlineshop.exception.NoSuchCartItemException;
 import com.example.onlineshop.exception.OutOfStockException;
-import com.example.onlineshop.exception.ProductNotFoundException;
 import com.example.onlineshop.exception.ShoppingCartException;
 import com.example.onlineshop.model.CartItem;
 import com.example.onlineshop.model.Product;
@@ -15,6 +13,9 @@ import com.example.onlineshop.service.ShoppingCartService;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.*;
 
 @AllArgsConstructor
@@ -45,7 +46,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         cartItem.setDate(new Date());
         cartItem.setProduct(product);
         shoppingCart.setSessionToken(sessionToken);
-        shoppingCart.setDate(new Date());
+        shoppingCart.setDate(LocalDateTime.now());
+        shoppingCart.setTime(LocalTime.now());
         if (shoppingCart.getItems().add(cartItem)){
             product.setQuantity(product.getQuantity()-quantity);
             if(product.getQuantity()<=0){
@@ -170,5 +172,19 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         cartItem.setQuantity(newQuantity);
         cartItemRepository.save(cartItem);
         return shoppingCartRepository.save(shoppingCart);
+    }
+
+    @Override
+    public void deleteCarts() {
+        List<ShoppingCart> shoppingCarts = shoppingCartRepository.findAll();
+        Iterator<ShoppingCart> iterator = shoppingCarts.iterator();
+        while (iterator.hasNext()) {
+            ShoppingCart cart = iterator.next();
+            LocalTime now = LocalTime.now();
+            if(cart.getTime().isBefore(now.minusMinutes(15))){
+                clearCart(cart.getSessionToken());
+                shoppingCartRepository.delete(cart);
+            }
+        }
     }
 }

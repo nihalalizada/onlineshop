@@ -1,5 +1,5 @@
 import React from "react";
-import { sendRequestWithPayload, sendRequest } from "./../../context/ApiContext"
+import { sendRequest } from "./../../context/ApiContext"
 import { Dialog, DialogTitle, Grid, DialogContent, DialogActions, Button, Typography, TextField } from "@material-ui/core"
 
 function ProductDetail({product, openDetail, handleClick}){
@@ -20,7 +20,7 @@ function ProductDetail({product, openDetail, handleClick}){
         setCatalog(product.catalog.name);
         setIsAvailable(product.available);
         setQuantityToAdd(1);
-    })
+    }, [product])
     console.log(product)
     async function addToCart(){
         console.log("Adding " + product.name + " to cart.")
@@ -42,7 +42,7 @@ function ProductDetail({product, openDetail, handleClick}){
         <DialogContent style={{minWidth:"450px", overflow: "hidden"}}>
             <Grid container spacing={4}>
                 <Grid item xs={4}>
-                    <img src={product.imageURL} style={{maxWidth: "150px", maxHeight: "173px"}}></img>
+                    <img alt="product" src={product.imageURL} style={{maxWidth: "150px", maxHeight: "173px"}}></img>
                 </Grid>
                 <Grid item xs={6}   >
                     <Typography 
@@ -72,6 +72,13 @@ function ProductDetail({product, openDetail, handleClick}){
                         component="div"
                         >
                         Price : {product.price} EUR
+                    </Typography>
+                    <Typography
+                        variant="subtitle1" 
+                        gutterBottom 
+                        component="div"
+                        >
+                        Catalog : {catalog}
                     </Typography>
                     <TextField
                         id="delete-product-id"

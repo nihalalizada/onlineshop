@@ -1,8 +1,8 @@
 import React from "react";
 import { getCart } from "../../context/ApiContext"
-import { sendRequestWithPayload, sendRequest } from "./../../context/ApiContext"
+import { sendRequest } from "./../../context/ApiContext"
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Dialog, DialogTitle, Grid, DialogContent, DialogActions, Button, Table, TableHead, TableRow, TableCell, TableBody, TextField, Tooltip, IconButton } from "@material-ui/core"
+import { Dialog, DialogTitle, Grid, DialogContent, DialogActions, Button, Table, TableHead, TableRow, TableCell, TableBody, Tooltip, IconButton } from "@material-ui/core"
 
 
 function CartDialog({ history }) {
@@ -56,9 +56,9 @@ function CartDialog({ history }) {
         }
     }
 
-    function close(c) {
+    // function close(c) {
 
-    }
+    // }
 
     return (
         <div>

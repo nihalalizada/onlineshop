@@ -53,7 +53,6 @@ function CartDialog({ history }) {
             }
             setTotalPrice(total)
             return 0
-
         }
         
     }
@@ -61,7 +60,8 @@ function CartDialog({ history }) {
     React.useEffect(() => {
         getCart(setItems);
         getTotalPrice();
-    }, [openCart]
+        // eslint-disable-next-line
+    }, [openCart, totalPrice]
     )
 
     function getValue(c, col) {

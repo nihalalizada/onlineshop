@@ -1,10 +1,25 @@
 import React from "react";
+import CatalogDetail from "../CatalogDetail/CatalogDetail"
 import { Table, TableContainer, TableHead, TableBody, TableRow, TableCell, Paper} from "@material-ui/core"
 
 function Catalogs({columns, contracts}){
-    return(
-        
+    const [openDetail, setOpenDetail] = React.useState(false);
+    const [selectedCatalog, setSelectedCatalogs] = React.useState(contracts[0]);
+
+
+    function handleClick(c){
+        if (openDetail === false){
+            console.log("opening " + c.name)
+            setOpenDetail(true);
+            setSelectedCatalogs(c)
+        }else {
+            setOpenDetail(false);
+        }
+    }
+
+    return(  
     <TableContainer component={Paper} >
+        <CatalogDetail catalog ={selectedCatalog} openDetail={openDetail} handleClick={handleClick} />
         <Table>
             <TableHead>
                 <TableRow>
@@ -14,7 +29,7 @@ function Catalogs({columns, contracts}){
             <TableBody>
                 {contracts.map((c ,i) => (
                     <TableRow key = {i} >
-                        {columns.map(col => <TableCell key = {col[0]} >{c[col[1]]}</TableCell>)}
+                        {columns.map(col => <TableCell key = {col[0]} onClick={() => handleClick(c)}>{c[col[1]]}</TableCell>)}
                     </TableRow>
                 ))}
             </TableBody>

@@ -22,6 +22,8 @@ public class Catalog implements Serializable {
     private String name;
     @Column(nullable = false)
     private String description;
+    @Column(nullable = false)
+    private String imageUrl;
 
     public Catalog(String name, String description) {
         this.name = name;

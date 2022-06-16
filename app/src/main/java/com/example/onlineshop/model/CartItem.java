@@ -7,22 +7,23 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Timestamp;
 
 @Getter
 @Setter
 @ToString
 @Entity
-@Table
+@Table(name = "cart_items")
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
 public class CartItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(nullable = false)
     private int quantity;
-    @Temporal(TemporalType.DATE)
-    private Date date;
+    @Column(nullable = false)
+    private Timestamp addedAt;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", nullable = false, updatable = false)
     private Product product;

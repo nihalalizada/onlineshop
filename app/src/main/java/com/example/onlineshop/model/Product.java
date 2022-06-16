@@ -2,6 +2,9 @@ package com.example.onlineshop.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -27,7 +30,7 @@ public class Product implements Serializable {
     private boolean isAvailable = true;
     private String imageURL;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
     @JoinColumn(nullable = true, name = "catalog_id")
     private Catalog catalog;
 

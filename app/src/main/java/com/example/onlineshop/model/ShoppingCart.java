@@ -2,15 +2,13 @@ package com.example.onlineshop.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Time;
+
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -29,12 +27,10 @@ public class ShoppingCart implements Serializable {
     @Transient
     private double totalPrice = 0.0;
     @Column(nullable = false)
-    private LocalDateTime date;
-    @Column(nullable = false)
-    private LocalTime time;
+    private Timestamp creationTime;
     @Column(nullable = false)
     private boolean checkedOut;
-    @OneToMany(cascade = CascadeType.ALL )
+    @OneToMany(cascade = CascadeType.ALL)
     private Set<CartItem> items;
     private String sessionToken;
 

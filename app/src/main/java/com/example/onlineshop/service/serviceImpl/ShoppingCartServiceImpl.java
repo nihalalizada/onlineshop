@@ -14,8 +14,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.*;
 
 @AllArgsConstructor
@@ -43,11 +43,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
         CartItem cartItem = new CartItem();
         cartItem.setQuantity(quantity);
-        cartItem.setDate(new Date());
+        cartItem.setAddedAt(Timestamp.valueOf(LocalDateTime.now()));
         cartItem.setProduct(product);
         shoppingCart.setSessionToken(sessionToken);
-        shoppingCart.setDate(LocalDateTime.now());
-        shoppingCart.setTime(LocalTime.now());
+        shoppingCart.setCreationTime(Timestamp.valueOf(LocalDateTime.now()));
         if (shoppingCart.getItems().add(cartItem)){
             product.setQuantity(product.getQuantity()-quantity);
             if(product.getQuantity()<=0){
@@ -84,7 +83,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
         CartItem cartItem = new CartItem();
         cartItem.setQuantity(quantity);
-        cartItem.setDate(new Date());
+        cartItem.setAddedAt(Timestamp.valueOf(LocalDateTime.now()));
         cartItem.setProduct(product);
         if (shoppingCart.getItems().add(cartItem)){
             product.setQuantity(product.getQuantity()-quantity);
@@ -174,17 +173,4 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCartRepository.save(shoppingCart);
     }
 
-    @Override
-    public void deleteCarts() {
-        List<ShoppingCart> shoppingCarts = shoppingCartRepository.findAll();
-        Iterator<ShoppingCart> iterator = shoppingCarts.iterator();
-        while (iterator.hasNext()) {
-            ShoppingCart cart = iterator.next();
-            LocalTime now = LocalTime.now();
-            if(cart.getTime().isBefore(now.minusMinutes(15))){
-                clearCart(cart.getSessionToken());
-                shoppingCartRepository.delete(cart);
-            }
-        }
-    }
 }

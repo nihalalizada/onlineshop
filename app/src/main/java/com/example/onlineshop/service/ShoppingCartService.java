@@ -16,5 +16,4 @@ public interface ShoppingCartService {
     void checkout(String sessionToken);
     ShoppingCart clearCart(String sessionToken);
     ShoppingCart updateQuantity(Long productId, String sessionToken, int newQuantity);
-    void deleteCarts();
 }

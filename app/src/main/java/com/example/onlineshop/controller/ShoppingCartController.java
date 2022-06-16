@@ -71,9 +71,4 @@ public class ShoppingCartController {
         request.getSession().invalidate();
         shoppingCartService.checkout(sessionToken);
     }
-
-    @DeleteMapping("/delete/all")
-    public void deleteCarts(){
-        shoppingCartService.deleteCarts();
-    }
 }

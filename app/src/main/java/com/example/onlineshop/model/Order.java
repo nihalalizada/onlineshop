@@ -3,8 +3,7 @@ package com.example.onlineshop.model;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -23,12 +22,11 @@ public class Order {
     private String address;
 
     @Column(nullable = false)
-    private Timestamp createdDate;
+    private LocalDateTime createdDate;
 
     @Column(nullable = false)
     private Double totalPrice;
 
-    @Column(nullable = false)
-    @OneToOne(mappedBy = "order")
+    @OneToOne()
     private ShoppingCart shoppingCart;
 }

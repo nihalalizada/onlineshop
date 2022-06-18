@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Controller
@@ -72,7 +71,7 @@ public class PaypalController {
 	            System.out.println(payment.toJSON());
 	            if (payment.getState().equals("approved")) {
 					ShoppingCart shoppingCart = shoppingCartRepository.getById(id);
-					newOrder.setCreatedDate(Timestamp.valueOf(LocalDateTime.now()));
+					newOrder.setCreatedDate(LocalDateTime.now());
 					newOrder.setShoppingCart(shoppingCart);
 					newOrder.setTotalPrice(shoppingCart.getTotalPrice());
 					orderRepository.save(newOrder);

@@ -31,7 +31,7 @@ public class Product implements Serializable {
     private String imageURL;
 
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-    @JoinColumn(nullable = true, name = "catalog_id")
+    @JoinColumn(nullable = false, name = "catalog_id")
     private Catalog catalog;
 
 

@@ -7,7 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -23,7 +23,7 @@ public class CartItem implements Serializable {
     @Column(nullable = false)
     private int quantity;
     @Column(nullable = false)
-    private Timestamp addedAt;
+    private LocalDateTime addedAt;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", nullable = false, updatable = false)
     private Product product;

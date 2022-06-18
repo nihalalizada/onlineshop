@@ -7,7 +7,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.io.Serializable;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
@@ -27,7 +26,7 @@ public class ShoppingCart implements Serializable {
     @Transient
     private double totalPrice = 0.0;
     @Column(nullable = false)
-    private Timestamp creationTime;
+    private LocalDateTime creationTime;
     @Column(nullable = false)
     private boolean checkedOut;
     @OneToMany(cascade = CascadeType.ALL)

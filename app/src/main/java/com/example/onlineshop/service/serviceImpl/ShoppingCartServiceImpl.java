@@ -43,10 +43,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
         CartItem cartItem = new CartItem();
         cartItem.setQuantity(quantity);
-        cartItem.setAddedAt(Timestamp.valueOf(LocalDateTime.now()));
+        cartItem.setAddedAt(LocalDateTime.now());
         cartItem.setProduct(product);
         shoppingCart.setSessionToken(sessionToken);
-        shoppingCart.setCreationTime(Timestamp.valueOf(LocalDateTime.now()));
+        shoppingCart.setCreationTime(LocalDateTime.now());
         if (shoppingCart.getItems().add(cartItem)){
             product.setQuantity(product.getQuantity()-quantity);
             if(product.getQuantity()<=0){
@@ -83,7 +83,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
         CartItem cartItem = new CartItem();
         cartItem.setQuantity(quantity);
-        cartItem.setAddedAt(Timestamp.valueOf(LocalDateTime.now()));
+        cartItem.setAddedAt(LocalDateTime.now());
         cartItem.setProduct(product);
         if (shoppingCart.getItems().add(cartItem)){
             product.setQuantity(product.getQuantity()-quantity);

@@ -63,12 +63,4 @@ public class ShoppingCartController {
         String sessionToken = (String) request.getSession().getAttribute("sessionToken");
         return new ResponseEntity<>(shoppingCartService.clearCart(sessionToken), HttpStatus.OK);
     }
-
-    @DeleteMapping("/checkout")
-    public void checkout(HttpServletRequest request){
-        String sessionToken = (String) request.getSession().getAttribute("sessionToken");
-        request.getSession().removeAttribute("sessionToken");
-        request.getSession().invalidate();
-        shoppingCartService.checkout(sessionToken);
-    }
 }

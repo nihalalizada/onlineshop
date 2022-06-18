@@ -14,7 +14,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -123,12 +122,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public void checkout(String sessionToken) {
-        ShoppingCart shoppingCart = shoppingCartRepository.findBySessionToken(sessionToken);
-        shoppingCartRepository.delete(shoppingCart);
-    }
-
-    @Override
     public ShoppingCart clearCart(String sessionToken) {
         ShoppingCart shoppingCart = shoppingCartRepository.findBySessionToken(sessionToken);
         Set<CartItem> items = shoppingCart.getItems();
@@ -168,6 +161,16 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         cartItem.setQuantity(newQuantity);
         cartItemRepository.save(cartItem);
         return shoppingCartRepository.save(shoppingCart);
+    }
+
+    @Override
+    public void updateCartStatus(Long cartId) {
+        shoppingCartRepository.updateCartStatus(cartId);
+    }
+
+    @Override
+    public ShoppingCart getCartById(Long cartId) {
+        return shoppingCartRepository.getById(cartId);
     }
 
 }

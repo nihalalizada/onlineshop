@@ -13,7 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
 import java.time.LocalDateTime;
+import java.util.Locale;
 
 @Controller
 @CrossOrigin(origins = { "http://localhost:3000" }, allowedHeaders = "*", allowCredentials = "true")
@@ -31,10 +34,13 @@ public class PaypalController {
 	public static final String SUCCESS_URL = "pay/success";
 	public static final String CANCEL_URL = "pay/cancel";
 
-	@GetMapping("/checkout")
-	public String home(Model model) {
+	@GetMapping("/checkout/{id}")
+	public String home(Model model, @PathVariable("id") Long id) {
+		ShoppingCart shoppingCart = shoppingCartRepository.getById(id);
 		Order order = new Order();
+		order.setTotalPrice(shoppingCart.getTotalPrice());
 		model.addAttribute("order", order);
+		model.addAttribute("cartId", id);
 		return "home";
 	}
 

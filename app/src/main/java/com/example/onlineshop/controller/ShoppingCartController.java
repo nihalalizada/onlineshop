@@ -46,7 +46,7 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/view")
-    public ResponseEntity<Set<CartItem>> viewCartItems(HttpServletRequest request){
+    public ResponseEntity<ShoppingCart> viewCartItems(HttpServletRequest request){
         String sessionToken = (String) request.getSession().getAttribute("sessionToken");
         return new ResponseEntity<>(shoppingCartService.getCartItems(sessionToken), HttpStatus.OK);
     }

@@ -117,12 +117,9 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     }
 
     @Override
-    public Set<CartItem> getCartItems(String sessionToken) {
+    public ShoppingCart getCartItems(String sessionToken) {
         ShoppingCart shoppingCart = shoppingCartRepository.findBySessionToken(sessionToken);
-        if(shoppingCart == null){
-            return Collections.emptySet();
-        }
-        return shoppingCart.getItems();
+        return shoppingCart;
     }
 
     @Override

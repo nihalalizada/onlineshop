@@ -12,7 +12,7 @@ public interface ShoppingCartService {
     ShoppingCart createNewCart(Long productId, String sessionToken, int quantity);
     ShoppingCart addProductToCart(Long productId, String sessionToken, int quantity);
     ShoppingCart deleteProductFromCart(Long productId, String sessionToken);
-    Set<CartItem> getCartItems(String sessionToken);
+    ShoppingCart getCartItems(String sessionToken);
     void checkout(String sessionToken);
     ShoppingCart clearCart(String sessionToken);
     ShoppingCart updateQuantity(Long productId, String sessionToken, int newQuantity);

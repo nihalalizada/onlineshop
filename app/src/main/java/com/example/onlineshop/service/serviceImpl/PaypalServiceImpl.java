@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 @Service
 public class PaypalServiceImpl implements PaypalService {
@@ -26,7 +27,7 @@ public class PaypalServiceImpl implements PaypalService {
 		Amount amount = new Amount();
 		amount.setCurrency("EUR");
 		total = new BigDecimal(total).setScale(2, RoundingMode.HALF_UP).doubleValue();
-		amount.setTotal(String.format("%.3f", total));
+		amount.setTotal(String.format(Locale.US, "%.2f", total));
 
 		Transaction transaction = new Transaction();
 		transaction.setDescription("online-shop payment");

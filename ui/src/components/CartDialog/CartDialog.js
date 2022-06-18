@@ -1,14 +1,16 @@
 import React from "react";
-import { getCart } from "../../context/ApiContext"
+import { getCart, sendRequestWithPayload } from "../../context/ApiContext"
 import { sendRequest } from "./../../context/ApiContext"
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Dialog, DialogTitle, Grid, DialogContent, DialogActions, Button, Table, TableHead, TableRow, TableCell, TableBody, Tooltip, IconButton } from "@material-ui/core"
 
 
 function CartDialog({ history }) {
-    const [items, setItems] = React.useState();
+    const [cart, setCart] = React.useState();
     const [openCart, setOpenCart] = React.useState(false);
     const [totalPrice, setTotalPrice] = React.useState(0);
+    const [cartId, setCartId] = React.useState(0);
+
     function handleClick() {
         if (openCart === false) {
             console.log("Opening Cart")
@@ -30,26 +32,27 @@ function CartDialog({ history }) {
 
     async function clearCart() {
         await sendRequest('DELETE', "cart/clear");
-        getCart(setItems);
+        getCart(setCart);
     }
 
     async function checkout() {
-        await sendRequest('DELETE', "cart/checkout");
-        getCart(setItems);
+        window.location.assign("http://localhost:8080/checkout/" + cart.cartId);
     }
+
+
 
     async function deleteItem(id) {
         await sendRequest('DELETE', "cart/delete/" + id);
-        getCart(setItems);
+        getCart(setCart);
     }
 
     function getTotalPrice(){
-        if (items === undefined){
+        if (cart === undefined){
             return 0
         } else {
             var total = 0
-            for(let i = 0; i < items.length; i++){
-                total += items[i]["quantity"] * items[i]["product"]["price"]
+            for(let i = 0; i < cart.items.length; i++){
+                total += cart.items[i]["quantity"] * cart.items[i]["product"]["price"]
             }
             setTotalPrice(total)
             return 0
@@ -58,7 +61,7 @@ function CartDialog({ history }) {
     }
 
     React.useEffect(() => {
-        getCart(setItems);
+        getCart(setCart);
         getTotalPrice();
         // eslint-disable-next-line
     }, [openCart, totalPrice]
@@ -105,8 +108,8 @@ function CartDialog({ history }) {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {items === undefined ? <></> :
-                                    items.map((c, i) => (
+                                {cart === undefined ? <></> :
+                                    cart.items.map((c, i) => (
                                         <TableRow key={i} >
                                             {columns.map(col => <TableCell key={col[0] + "-" + c.product.id} onClick={() => handleClick(c)}>{getValue(c, col)} </TableCell>)}
                                             <TableCell><Button style={{height: "35px", marginTop:"12px"}} onClick={() => deleteItem(c.id)}>Delete</Button>    </TableCell>

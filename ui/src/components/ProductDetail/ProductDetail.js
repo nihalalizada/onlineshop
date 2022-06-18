@@ -20,7 +20,6 @@ function ProductDetail({product, openDetail, handleClick}){
         setCatalog(product.catalog.name);
         setIsAvailable(product.available);
     }, [product])
-    console.log(product)
     async function addToCart(){
         console.log("Adding " + product.name + " to cart.")
         if (quantity > product.quantity){

@@ -8,6 +8,7 @@ import { getProducts, sendRequest } from "./../../context/ApiContext"
 function ProductsPage({ history }) {
     const [products, setProducts] = React.useState();
     const [searchName, setSearchName] = React.useState("");
+    const [catalogId, setCatalogId] = React.useState("");
 
     React.useEffect(() => {
         getProducts(setProducts);
@@ -19,7 +20,7 @@ function ProductsPage({ history }) {
         ["Price", "price"],
         ["Description", "description"],
         ["Quantity", "quantity"],
-        ["Catalog", "catalog", "name"]
+        // ["Catalog", "catalog", "name"]
     ]
 
     async function search() {
@@ -30,11 +31,19 @@ function ProductsPage({ history }) {
             getProducts(setProducts);
         }
     }
-
-    console.log(products);
+    async function searchCatalog() {
+        if (catalogId !== ""){
+            const result = await sendRequest("GET", "api/catalogs/" + catalogId + "/products")
+            setProducts(result)
+        }else {
+            getProducts(setProducts);
+        }
+    }
+    // TODO:Add Catalog Filter
     return (
         <> 
-        <Grid container style={{ paddingLeft: "83%", paddingTop: ".3%" , background: "rgb(231, 235, 240)"}}>
+        <Grid container style={{ paddingLeft: "70%", paddingTop: ".3%" , background: "rgb(231, 235, 240)"}}>
+            <Grid item>
             <TextField
                 id="outlined-required"
                 label="Search"
@@ -49,6 +58,23 @@ function ProductsPage({ history }) {
                     </IconButton>
                 </Tooltip>
             </Box>
+            </Grid>
+              <Grid item style={{marginLeft: "10px"}}>
+            <TextField
+                id="outlined-required"
+                label="CatalogId"
+                value={catalogId}
+                onChange={(event) => setCatalogId(event.target.value)}
+            />
+            <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="Search">
+                    <IconButton onClick={searchCatalog} variant="contained" sx={{ p: 0 }}>
+                        <SearchIcon style={{ color: "black" }} />
+
+                    </IconButton>
+                </Tooltip>
+            </Box>
+            </Grid>
         </Grid>
         <Grid container spacing={2} style={{ width: '100%',  height: "90.5vh", background: "rgb(231, 235, 240)", padding: "2%", margin: "0px" }}>
             {products === undefined ? <></> :

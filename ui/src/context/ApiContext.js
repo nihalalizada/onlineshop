@@ -28,8 +28,8 @@ export async function getCatalogs(setCatalogs){
     .then((data) => setCatalogs(data));
 }
 
-export async function getCart(setItems){
+export async function getCart(setCart){
     fetch(`http://localhost:8080/cart/view`, {credentials: 'include'} )
     .then((res) => res.json())
-    .then((data) => setItems(data));
+    .then((data) => setCart(data));
 }

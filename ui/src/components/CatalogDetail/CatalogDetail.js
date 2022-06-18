@@ -22,7 +22,6 @@ function CatalogDetail({catalog, openDetail, handleClick, }){
             return c[col[1]][col[2]]
         }
     }
-    console.log(catalog)
 
     React.useEffect(() => {
         setCatalogName(catalog.name);

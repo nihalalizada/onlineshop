@@ -48,8 +48,8 @@ public class CatalogController {
         return new ResponseEntity<>(catalogService.getCatalogById(id), HttpStatus.FOUND);
     }
 
-    @GetMapping("/{id}/products")
-    public ResponseEntity<List<Product>> getProductsByCatalog(@PathVariable("id") Long id){
-        return new ResponseEntity<>(productService.getProductsByCatalogId(id), HttpStatus.FOUND);
+    @GetMapping("/{name}/products")
+    public ResponseEntity<List<Product>> getProductsByCatalogName(@PathVariable("name") String name){
+        return new ResponseEntity<>(productService.getProductsByCatalogName(name), HttpStatus.FOUND);
     }
 }

@@ -17,11 +17,6 @@ public class ProductController {
     @Autowired
     private ProductServiceImpl productService;
 
-    @GetMapping(path = "/admin")
-    public String adminHome() {
-        return "adminHome";
-    }
-
     @GetMapping(path = "/{productId}")
     public ResponseEntity<Product> getProductById(@PathVariable("productId") Long productId) {
         return new ResponseEntity<>(productService.getProductById(productId), HttpStatus.FOUND);

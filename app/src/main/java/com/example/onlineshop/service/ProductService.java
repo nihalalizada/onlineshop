@@ -27,7 +27,7 @@ public interface ProductService {
     /** Searching Product  **/
     Product getProductByName(String name);
 
-    List<Product> getProductsByCatalogId(Long catalogId);
+    List<Product> getProductsByCatalogName(String name);
 
 
 }

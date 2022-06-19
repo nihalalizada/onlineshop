@@ -43,8 +43,6 @@ public class CatalogServiceImpl implements CatalogService {
         Catalog updateCatalog = catalogRepository.getById(catalog.getCatalogId());
         updateCatalog.setCatalogId(catalog.getCatalogId());
         updateCatalog.setName(catalog.getName());
-        //updateCatalog.setProducts();
-        updateCatalog.setImageUrl(catalog.getImageUrl());
         updateCatalog.setDescription(catalog.getDescription());
         return catalogRepository.save(updateCatalog);
     }

@@ -20,7 +20,8 @@ public class Order {
     private String email;
     @Column(nullable = false)
     private String address;
-
+    @Column(nullable = false)
+    private boolean processed = false;
     @Column(nullable = false)
     private LocalDateTime createdDate;
 

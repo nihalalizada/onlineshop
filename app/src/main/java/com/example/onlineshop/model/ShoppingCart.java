@@ -24,7 +24,7 @@ public class ShoppingCart implements Serializable {
     @Transient
     private int numberOfItems;
     @Transient
-    private double totalPrice = 0.0;
+    private double totalPrice;
     @Column(nullable = false)
     private LocalDateTime creationTime;
     @Column(nullable = false)
@@ -47,6 +47,7 @@ public class ShoppingCart implements Serializable {
     }
 
     public double getTotalPrice() {
+        totalPrice = 0;
         for (CartItem item: items
              ) {
             totalPrice += item.getProduct().getPrice()*item.getQuantity();

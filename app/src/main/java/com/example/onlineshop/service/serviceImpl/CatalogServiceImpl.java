@@ -50,7 +50,6 @@ public class CatalogServiceImpl implements CatalogService {
     @Override
     public Catalog getCatalogById(Long id) {
         Optional<Catalog> catalog = catalogRepository.findById(id);
-
         if(catalog.isPresent())
             return catalog.get();
         else

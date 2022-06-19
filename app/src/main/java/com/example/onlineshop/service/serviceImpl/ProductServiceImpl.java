@@ -1,12 +1,17 @@
 package com.example.onlineshop.service.serviceImpl;
 
 
+import com.example.onlineshop.exception.CatalogNotFoundException;
 import com.example.onlineshop.exception.ProductNotFoundException;
+import com.example.onlineshop.model.Catalog;
 import com.example.onlineshop.model.Product;
+import com.example.onlineshop.repository.CatalogRepository;
 import com.example.onlineshop.repository.ProductRepository;
 import com.example.onlineshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +19,8 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
 
     private ProductRepository productRepository;
+    @Autowired
+    private CatalogRepository catalogRepository;
 
     @Autowired  /** in order to access JPA methods (Dependency Injection) */
     public void setProductRepository(ProductRepository productRepository) {
@@ -63,7 +70,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getProductsByCatalogName(String name) {
-        return productRepository.getProductsByCatalogId(name);
+        Catalog catalog = catalogRepository.findCatalogByName(name);
+        if(catalog == null){
+            return Collections.emptyList();
+        }
+        return productRepository.getProductsByCatalogId(catalog.getCatalogId());
     }
 
     @Override

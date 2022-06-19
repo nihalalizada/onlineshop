@@ -224,7 +224,7 @@ function AdminConsole({ columns, contracts }) {
                         </Grid>
                     </Item>
                 </Grid>
-                <Grid item xs={6} md={4}>
+                <Grid item xs={6} md={6}>
                     <Item>
                         <Grid item >
                             <Typography variant="h6" gutterBottom component="div">Delete Product</Typography>
@@ -248,18 +248,7 @@ function AdminConsole({ columns, contracts }) {
 
                     </Item>
                 </Grid>
-                <Grid item xs={6} md={4}>
-                    <Item>
-                        <Button
-                            onClick={getCatalog}
-                            variant="contained"
-
-                            sx={{ my: 2, color: 'white', display: 'block' }}
-                        >
-                            Get
-                        </Button></Item>
-                </Grid>
-                <Grid item xs={6} md={4}>
+                <Grid item xs={6} md={6}>
                     <Item>                   <Grid item >
                         <Typography variant="h6" gutterBottom component="div">Delete Catalog</Typography>
                         <TextField

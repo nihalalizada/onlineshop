@@ -42,6 +42,6 @@ mvn package -DskipTests
 
 * Start :
 ```sh
-java -Djasypt.encryptor.password=progex -jar target\online-shop-0.0.1-SNAPSHOT.jar
+java -jar target\online-shop-0.0.1-SNAPSHOT.jar
 ```
 

@@ -62,7 +62,7 @@ function ProductsPage({ history }) {
               <Grid item style={{marginLeft: "10px"}}>
             <TextField
                 id="outlined-required"
-                label="Catalog Name"
+                label="Catalog"
                 value={catalogId}
                 onChange={(event) => setCatalogId(event.target.value)}
             />

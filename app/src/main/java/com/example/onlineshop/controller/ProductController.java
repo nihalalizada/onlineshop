@@ -45,6 +45,11 @@ public class ProductController {
         return new ResponseEntity<>( productService.getProductByName(name), HttpStatus.FOUND);
     }
 
+    @GetMapping(path = "/search/{name}")
+    public ResponseEntity<List<Product>> searchProduct(@PathVariable("name") String name) {
+        return new ResponseEntity<>( productService.searchProduct(name), HttpStatus.FOUND);
+    }
+
 
 
 

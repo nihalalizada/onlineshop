@@ -11,6 +11,7 @@ import com.example.onlineshop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -69,12 +70,21 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getProductsByCatalogName(String name) {
-        Catalog catalog = catalogRepository.findCatalogByName(name);
-        if(catalog == null){
+    public List<Product> getProductsByCatalog(String name) {
+        List<Catalog> catalogs = catalogRepository.searchCatalog(name);
+        if(catalogs.isEmpty()){
             return Collections.emptyList();
         }
-        return productRepository.getProductsByCatalogId(catalog.getCatalogId());
+        List<Product> products = new ArrayList<>();
+        for(Catalog catalog: catalogs){
+            products.addAll(productRepository.getProductsByCatalogId(catalog.getCatalogId()));
+        }
+        return products;
+    }
+
+    @Override
+    public List<Product> searchProduct(String name) {
+        return productRepository.searchProduct(name);
     }
 
     @Override

@@ -50,6 +50,6 @@ public class CatalogController {
 
     @GetMapping("/{name}/products")
     public ResponseEntity<List<Product>> getProductsByCatalogName(@PathVariable("name") String name){
-        return new ResponseEntity<>(productService.getProductsByCatalogName(name), HttpStatus.FOUND);
+        return new ResponseEntity<>(productService.getProductsByCatalog(name), HttpStatus.FOUND);
     }
 }

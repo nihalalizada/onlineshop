@@ -60,14 +60,6 @@ public class ProductServiceImpl implements ProductService {
         else 
             throw new ProductNotFoundException("Product with ID:" +productId+ "was not found");
     }
-    @Override
-    public Product getProductByName(String name) {
-        Optional<Product> product = productRepository.findByName(name);
-        if(product.isPresent())
-            return product.get();
-        else
-            throw new ProductNotFoundException("This product:" +name+ "was not found");
-    }
 
     @Override
     public List<Product> getProductsByCatalog(String name) {

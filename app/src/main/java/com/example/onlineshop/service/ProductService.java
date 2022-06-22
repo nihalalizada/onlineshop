@@ -25,11 +25,10 @@ public interface ProductService {
 
 
     /** Searching Product  **/
-    Product getProductByName(String name);
+    List<Product> searchProduct(String name);
 
     List<Product> getProductsByCatalog(String name);
 
-    List<Product> searchProduct(String name);
 
 
 }

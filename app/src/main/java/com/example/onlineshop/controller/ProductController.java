@@ -41,12 +41,7 @@ public class ProductController {
         return new ResponseEntity<>(productService.updateProduct(product), HttpStatus.OK);
     }
     @GetMapping(path = "/search")
-    public ResponseEntity<Product> searchProductByName(@RequestParam("name") String name) {
-        return new ResponseEntity<>( productService.getProductByName(name), HttpStatus.FOUND);
-    }
-
-    @GetMapping(path = "/search/{name}")
-    public ResponseEntity<List<Product>> searchProduct(@PathVariable("name") String name) {
+    public ResponseEntity<List<Product>> searchProductByName(@RequestParam("name") String name) {
         return new ResponseEntity<>( productService.searchProduct(name), HttpStatus.FOUND);
     }
 

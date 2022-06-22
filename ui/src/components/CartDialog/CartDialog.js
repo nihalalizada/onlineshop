@@ -97,7 +97,7 @@ function CartDialog({ history }) {
 
 
                 <DialogTitle>Shopping Cart</DialogTitle>
-                <DialogContent style={{ minWidth: "450px", overflow: "hidden" }}>
+                <DialogContent style={{ minWidth: "450px", overflow: "scroll" }}>
                     <Grid container spacing={4}>
 
                         <Table>

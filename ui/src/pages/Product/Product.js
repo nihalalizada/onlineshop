@@ -7,7 +7,7 @@ import { getProducts, sendRequest } from "./../../context/ApiContext"
 
 function ProductsPage({ history }) {
     const [products, setProducts] = React.useState();
-    const [searchName, setSearchName] = React.useState("");
+    const [searchName, setSearchName] = React.useState();
     const [catalogId, setCatalogId] = React.useState("");
 
     React.useEffect(() => {
@@ -26,7 +26,7 @@ function ProductsPage({ history }) {
     async function search() {
         if (searchName !== ""){
             const result = await sendRequest("GET", "api/products/search?name=" + searchName)
-            setProducts([result])
+            setProducts(result)
         }else {
             getProducts(setProducts);
         }

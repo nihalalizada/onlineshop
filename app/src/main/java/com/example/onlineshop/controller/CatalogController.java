@@ -52,4 +52,9 @@ public class CatalogController {
     public ResponseEntity<List<Product>> getProductsByCatalogName(@PathVariable("name") String name){
         return new ResponseEntity<>(productService.getProductsByCatalog(name), HttpStatus.FOUND);
     }
+
+    @GetMapping(path = "/search")
+    public ResponseEntity<List<Catalog>> searchCatalogByName(@RequestParam("name") String name) {
+        return new ResponseEntity<>( catalogService.searchCatalog(name), HttpStatus.FOUND);
+    }
 }

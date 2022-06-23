@@ -76,7 +76,11 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> searchProduct(String name) {
-        return productRepository.searchProduct(name);
+        List<Product> products = productRepository.searchProduct(name);
+        if(products == null){
+            return Collections.emptyList();
+        }
+        return products;
     }
 
     @Override

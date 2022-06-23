@@ -7,6 +7,7 @@ import com.example.onlineshop.service.CatalogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,5 +55,14 @@ public class CatalogServiceImpl implements CatalogService {
             return catalog.get();
         else
             throw new CatalogNotFoundException("Catalog with id " + id + " was not found!");
+    }
+
+    @Override
+    public List<Catalog> searchCatalog(String name) {
+        List<Catalog> catalogs = catalogRepository.searchCatalog(name);
+        if(catalogs == null){
+            return Collections.emptyList();
+        }
+        return catalogs;
     }
 }

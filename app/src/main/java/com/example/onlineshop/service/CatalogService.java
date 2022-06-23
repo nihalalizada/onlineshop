@@ -16,4 +16,6 @@ public interface CatalogService {
 
     Catalog getCatalogById(Long id);
 
+    List<Catalog> searchCatalog(String name);
+
 }

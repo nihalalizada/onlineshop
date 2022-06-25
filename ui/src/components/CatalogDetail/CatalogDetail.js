@@ -59,7 +59,10 @@ function CatalogDetail({catalog, openDetail, handleClick, }){
             </Grid>
         </DialogContent>
         <DialogActions>
-            <Button onClick={handleClick}>Close</Button>
+            <Button onClick={handleClick}
+                style={{backgroundColor: "#5da4e3", color:"white"}}>
+                Close
+            </Button>
 
         </DialogActions>
     </Dialog>)

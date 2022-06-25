@@ -165,6 +165,7 @@ function AdminConsole({ columns, contracts }) {
                                 <Grid item >
                                     <Button
                                         variant="contained"
+                                        style={{backgroundColor: "#73bd6a", color:"white"}}
                                         onClick={() => handleClickProduct('POST', "api/products/add", productId, productName, productPrice, productQuantity, productDescription, productImage, productCatalog)}
                                         sx={{ my: 2, color: 'white', display: 'block' }}
                                     >
@@ -213,7 +214,7 @@ function AdminConsole({ columns, contracts }) {
                                     <Button
                                         onClick={() => handleClickCatalog('POST', 'api/catalogs/add', catalogId, catalogName, catalogDescription)}
                                         variant="contained"
-
+                                        style={{backgroundColor: "#73bd6a", color:"white"}}
                                         sx={{ my: 2, color: 'white', display: 'block' }}
                                     >
                                         Create
@@ -225,7 +226,7 @@ function AdminConsole({ columns, contracts }) {
                     </Item>
                 </Grid>
                 <Grid item xs={6} md={6}>
-                    <Item>
+                    <Item>    
                         <Grid item >
                             <Typography variant="h6" gutterBottom component="div">Delete Product</Typography>
                             <TextField
@@ -239,13 +240,14 @@ function AdminConsole({ columns, contracts }) {
                             <Button
                                 onClick={() => handleClickDelete("products", productDeleteId)}
                                 variant="contained"
-                                sx={{ my: 2, color: 'white', display: 'block' }}
+                                sx={{ my: 2, backgroundColor: 'red', display: 'block' }}
+                                style={{backgroundColor:"rgb(211 63 63 / 87%)", color:"white"}}
                             >
                                 Delete
                             </Button>
-
+                            
                         </Grid>
-
+                       
                     </Item>
                 </Grid>
                 <Grid item xs={6} md={6}>
@@ -263,6 +265,7 @@ function AdminConsole({ columns, contracts }) {
                             onClick={() => handleClickDelete("catalogs", catalogDeleteId)}
                             variant="contained"
                             sx={{ my: 2, color: 'white', display: 'block' }}
+                            style={{backgroundColor:"rgb(211 63 63 / 87%)", color:"white"}}
                         >
                             Delete
                         </Button>
@@ -344,6 +347,7 @@ function AdminConsole({ columns, contracts }) {
                                         variant="contained"
                                         onClick={() => handleClickProduct('PUT', "api/products/update", productUpdateId, productUpdateName, productUpdatePrice, productUpdateQuantity, productUpdateDescription, productUpdateImage, productUpdateCatalog)}
                                         sx={{ my: 2, color: 'white', display: 'block' }}
+                                        style={{backgroundColor: "rgb(243 195 86)", color:"white"}}
                                     >
                                         Save
                                     </Button>
@@ -390,8 +394,8 @@ function AdminConsole({ columns, contracts }) {
                                     <Button
                                         onClick={() => handleClickCatalog('PUT', 'api/catalogs/update', catalogUpdateId, catalogUpdateName, catalogUpdateDescription)}
                                         variant="contained"
-
-                                        sx={{ my: 2, color: 'white', display: 'block' }}
+                                        style={{backgroundColor: "rgb(243 195 86)", color:"white"}}
+                                        sx={{ my: 2, color: 'white', display: 'block'}}
                                     >
                                         Save
                                     </Button>

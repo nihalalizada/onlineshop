@@ -14,7 +14,7 @@ function AdminPrompt({ setIsAdmin }) {
     const [checkedYes, setCheckedYes] = React.useState(false);
 
     function handleClick(c) {
-        if (c === "Yes"){
+        if (c === "Yes") {
             if (checkedYes === false) {
                 setCheckedYes(true);
             } else {
@@ -27,36 +27,37 @@ function AdminPrompt({ setIsAdmin }) {
                 return;
             }
         }
-        
+
     }
 
     return (
         <Box sx={{ flexGrow: 1 }}>
-            <Grid container spacing={2}  style={{ width: '100%', height: "94.5vh", background: "rgb(231, 235, 240)", padding: "2%", margin: "0px",  paddingLeft: "18%", paddingTop:"2%"}}>
+            <Grid container spacing={2} style={{ width: '100%', height: "94.5vh", background: "rgb(231, 235, 240)", padding: "2%", margin: "0px", paddingLeft: "18%", paddingTop: "2%" }}>
                 <Grid item xs={6} md={8}>
                     <Item>
                         <Typography variant="h6" gutterBottom component="div">Admin Prompt</Typography>
                         <Grid container spacing={2} >
 
-                            <Grid item style={{width:"100%", display : checkedYes ? "none" : ""}}  >
+                            <Grid item style={{ width: "100%", display: checkedYes ? "none" : "" }}  >
                                 Are you an Admin?
                             </Grid>
-                            <Grid item style={{width:"100%", display : checkedYes ? "" : "none"}}  >
+                            <Grid item style={{ width: "100%", display: checkedYes ? "" : "none" }}  >
                                 Are you lying?
                             </Grid>
-                            <Grid item style={{width:"50%"}}>
+                            <Grid item style={{ width: "50%" }}>
                                 <Button
-
+                                    style={{ backgroundColor: "#5da4e3", color: "white" }}
                                     sx={{ my: 2, color: 'white', display: 'block' }}
                                     onClick={() => handleClick("Yes")}
                                 >
-                                Yes
+                                    Yes
                                 </Button>
                             </Grid>
-                            <Grid item style={{width:"50%"}}>
+                            <Grid item style={{ width: "50%" }}>
                                 <Button
+                                    style={{ backgroundColor: "#5da4e3", color: "white" }}
                                     sx={{ my: 2, color: 'white', display: 'block' }}
-                                    onClick={() =>handleClick("No")}
+                                    onClick={() => handleClick("No")}
                                 >
                                     No
                                 </Button>

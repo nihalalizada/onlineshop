@@ -91,7 +91,8 @@ function CartDialog({ history }) {
 
             <Dialog open={openCart} onClose={handleClick} onBackdropClick="false" style={{
                 '& .MuiDialogPaperWidthSm': {
-                    maxWidth: "950px"
+                    maxWidth: "950px",
+                    minWidth: "450px"
                 }
             }}>
 
@@ -112,7 +113,7 @@ function CartDialog({ history }) {
                                     cart.items.map((c, i) => (
                                         <TableRow key={i} >
                                             {columns.map(col => <TableCell key={col[0] + "-" + c.product.id} onClick={() => handleClick(c)}>{getValue(c, col)} </TableCell>)}
-                                            <TableCell><Button style={{height: "35px", marginTop:"12px"}} onClick={() => deleteItem(c.id)}>Delete</Button>    </TableCell>
+                                            <TableCell><Button style={{height: "35px", marginTop:"12px", backgroundColor:"rgb(211 63 63 / 87%)", color:"white" }} onClick={() => deleteItem(c.id)}>Delete</Button>    </TableCell>
                                         </TableRow>
                                     ))}
                                      <TableRow key={"total"} >
@@ -134,9 +135,19 @@ function CartDialog({ history }) {
                 </DialogContent>
                 <DialogActions>
 
-                    <Button onClick={() => handleClick()}>Close</Button>
-                    <Button onClick={() => clearCart()}>Clear</Button>
-                    <Button onClick={() => checkout()}>Checkout</Button>
+                    <Button onClick={() => handleClick()}
+                        style={{backgroundColor: "#5da4e3", color:"white"}}
+                        >Close
+                    </Button>
+                    <Button onClick={() => clearCart()}
+                        style={{backgroundColor:"rgb(211 63 63 / 87%)", color:"white"}}
+                        >
+                            Clear
+                    </Button>
+                    <Button onClick={() => checkout()}
+                        style={{backgroundColor: "#73bd6a", color:"white"}}>
+                        Checkout
+                    </Button>
                 </DialogActions>
             </Dialog></div>)
 }

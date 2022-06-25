@@ -89,7 +89,7 @@ function ProductDetail({product, openDetail, handleClick}){
                     <Button 
                         onClick={() => addToCart()}
                         number
-                        style={{height: "35px", marginTop:"12px", marginLeft:"5px"}}
+                        style={{height: "35px", marginTop:"12px", marginLeft:"5px", backgroundColor: "#73bd6a", color:"white"}}
                         disabled={!isAvailable}
                         >Add to Cart
                     </Button>
@@ -97,7 +97,10 @@ function ProductDetail({product, openDetail, handleClick}){
             </Grid>
         </DialogContent>
         <DialogActions>
-            <Button onClick={handleClick}>Close</Button>
+            <Button onClick={handleClick}
+                style={{backgroundColor: "#5da4e3", color:"white"}}>
+                Close
+            </Button>
 
         </DialogActions>
     </Dialog>)

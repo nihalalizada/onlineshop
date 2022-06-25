@@ -122,15 +122,6 @@ function CartDialog({ history }) {
                                         </TableRow>
                             </TableBody>
                         </Table>
-                        {/* <div style={{height : "60px"}}>
-            <TextField
-                id="delete-product-id"
-                label="Product ID"
-                value={deleteId}
-                onChange={(event) => setDeleteId(event.target.value)}
-            />
-            <Button style={{height: "35px", marginTop:"12px"}} onClick={() => deleteItem()}>Delete</Button>    
-            </div>     */}
                     </Grid>
                 </DialogContent>
                 <DialogActions>

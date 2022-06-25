@@ -15,8 +15,7 @@ function CatalogsPage({history}){
 
     const columns = [
         ["Name", "name"],
-        ["Description", "description"],
-        ["Catalog ID", "catalogId"]
+        ["Description", "description"]
     ]
 
     async function searchCatalog() {

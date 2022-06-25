@@ -115,15 +115,6 @@ function AdminConsole({ columns, contracts }) {
                                     onChange={(event) => setProductDescription(event.target.value)}
                                 />
                             </Grid>
-                            {/* <Grid item >
-                                <TextField
-                                    required
-                                    id="outlined-required"
-                                    label="Product ID"
-                                    value={productId}
-                                    onChange={(event) => setProductId(event.target.value)}
-                                />
-                            </Grid> */}
 
                             <Grid item >
                                 <TextField
@@ -199,15 +190,6 @@ function AdminConsole({ columns, contracts }) {
                                     onChange={(event) => setCatalogDescription(event.target.value)}
                                 />
                             </Grid>
-                            {/* <Grid item >
-                                <TextField
-                                    required
-                                    id="outlined-required"
-                                    label="Catalog ID"
-                                    value={catalogId}
-                                    onChange={(event) => setCatalogId(event.target.value)}
-                                />
-                            </Grid> */}
                             <div style={{ width: "100%", margin: "2%" }}>
                                 <Grid item >
 
